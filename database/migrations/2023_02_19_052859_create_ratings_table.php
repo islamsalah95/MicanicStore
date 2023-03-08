@@ -16,6 +16,7 @@ class CreateRatingsTable extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_name');
             $table->unsignedBigInteger("micanic_id");
             $table->unsignedBigInteger("order_id");
             $table->enum('rate',[0,1,2,3,4,5])->default(0);

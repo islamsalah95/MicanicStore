@@ -26,12 +26,13 @@ class AuthRegisterValidation extends FormRequest
     {
         return [
             'name'=>['required','max:32'],
-            'email'=>['required','max:50','unique:users,email'],
+            'email'=>['required','max:50','unique:micanics,email'],
             'password'=>['required','regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/','confirmed'],
             'password_confirmation'=>['required','same:password'],
             'code'=>['nullable'],
-            'nid_img'=>['required',"string"],
-            'cert_img'=>['required',"string"],
+            'nid_img'=>['required','max:32'],
+            'cert_img'=>['required','max:32'],
+            'personal_img'=>['required','max:32'],
             'status' => 'required|in:invistgation,accept,block'
                 ];
     }

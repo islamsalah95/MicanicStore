@@ -30,8 +30,7 @@ class MicanicController extends Controller
         // send emal rating link
         $orserUser=Order::find($orderId) ;
         $orserUser=$orserUser->User;
-       $orserUser->email;
-
+        $orserUser->email;
         Mail::to($orserUser)->send(new RateOrder());
 
         return ApiTraits::data(compact('results'),'results success');
@@ -86,7 +85,7 @@ class MicanicController extends Controller
     public function micanicCloseOrders()
     {
          $auth=Auth::guard('sanctum')->user();
-        $results = Order::where('micanic_id',$auth->id)->get();
+        $results = Order::where('micanic_id',$auth->id)->where('status','close')->get();
          return ApiTraits::data(compact('results'),'results success');
 
     }

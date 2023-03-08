@@ -15,24 +15,18 @@ data() {
 methods:{
         logout(){
           // window.axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");;
+          const headers = { Authorization: localStorage.getItem("token") };
 
-        axios.get("http://127.0.0.1:8000/api/logoutAll",{
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'Authorization': localStorage.getItem("token")
-  }
-}).then(  (response) => {
-                    localStorage.removeItem("token");
+        axios.get("http://127.0.0.1:8000/api/logoutAll",{ headers }).then(function(response){
+                   localStorage.removeItem("token");
                     localStorage.removeItem("type");
-                    this.$root.$emit("isLogin", false);
+                   return this.$root.$emit("isLogin", false);
                 }).catch((error) => console.log(error)); 
 
                 this.$router.replace('/')
+                return this.$root.$emit("isLogin", false);
 
               } 
-
-                  
-
               
               },
     

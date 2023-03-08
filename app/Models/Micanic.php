@@ -21,6 +21,7 @@ class Micanic extends Model
         'name',
         'nid_img',
         'cert_img',
+        'personal_img',
         'email',
         'password',
         'code',

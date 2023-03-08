@@ -109,13 +109,15 @@ export default {
         Notification.error("input is require success");
 
       }else{
+        const headers = { Authorization: localStorage.getItem("token") };
+
         await axios.post(
           `http://127.0.0.1:8000/api/addCity`,
           {
             city:this.city,
           },
-          {'Authorization': localStorage.getItem("token") ,
-          'Accept':'application/json'}
+          { headers }
+
         )
         .then((response) => {
           console.log(response.data.data.results);
@@ -134,14 +136,14 @@ export default {
         Notification.error("input is require success");
 
       }else{
+        const headers = { Authorization: localStorage.getItem("token") };
         await axios.post(
           `http://127.0.0.1:8000/api/addService`,
           {
             name:this.name,
              price:this.price,
           },
-          {'Authorization': localStorage.getItem("token") ,
-          'Accept':'application/json'}
+          { headers }
         )
         .then((response) => {
           console.log(response.data.data.results);

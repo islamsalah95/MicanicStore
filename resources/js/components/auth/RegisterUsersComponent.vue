@@ -163,22 +163,15 @@ export default {
                         password_confirmation:this.password_confirmation,
 
                     })
-                    .then(async (response) => {
-                        console.log(response.data.data.user);
-                        await localStorage.setItem(
-                            "token",
-                            response.data.data.user.token
-                        );
-                        localStorage.setItem(
-                            "type",
-                            response.data.data.user.type
-                        );
-
-                        this.$store.dispatch("user", response.data.data.user);
-
-                        Notification.success("register success");
-
-                        this.$router.replace("/UserDashboard");
+                    .then(async (res) => {
+                        console.log(res);
+                        if(res.status==200){
+                       res.data.files;
+                        res.status; // HTTP status
+                        console.log(res.data.data);
+                        Notification.success();
+                        this.$router.replace("/VerifyPass")
+                        }
                     })
                     .catch((error) => console.log(error));
             }

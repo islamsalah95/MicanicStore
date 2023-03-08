@@ -4,6 +4,8 @@ use App\Models\Cart;
 use App\Models\City;
 use App\Models\Rate;
 use App\Models\User;
+use App\Models\Order;
+use App\Events\NewOrd;
 use App\Models\Comment;
 use App\Models\Micanic;
 use App\Models\Product;
@@ -25,12 +27,14 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MicanicController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AuthAll\LoginAlluser;
 use App\Http\Controllers\AuthAll\LogoutAlluser;
+use App\Http\Controllers\AuthAll\VerifyAlluser;
 use App\Http\Controllers\AdminstrationController;
 use App\Http\Controllers\AuthAll\ResetPassAlluser;
 
@@ -53,6 +57,9 @@ Route::post('/LoginAlluser', [LoginAlluser::class, 'LoginAlluser']);
 Route::post('/LogoutAlluser', [LogoutAlluser::class, 'LogoutAlluser']);
 Route::post('/ResetPassAlluser', [ResetPassAlluser::class, 'ResetPassAlluser']);
 Route::post('/UpdatePassAlluser', [ResetPassAlluser::class, 'UpdatePassAlluser']);
+Route::post('/VerifyAlluser', [VerifyAlluser::class,'VerifyAlluser']);
+
+
 //*******************************>>>>>>authuser<<<<<**********************************//
 Route::post('/register', [AuthApis::class, 'register']);
 Route::post('/send', [AuthApis::class, 'send']);
@@ -82,6 +89,10 @@ Route::post('/paymentStore', [PaymentController::class, 'store']);
 
 Route::get('/UserPayments', [PaymentController::class, 'UserPayments']);
 
+Route::get('/StackOrders', [OrderController::class, 'StackOrders']);
+Route::delete('/CloseStackOrders', [OrderController::class, 'CloseStackOrders']);
+
+
 
 });
 
@@ -99,6 +110,10 @@ Route::post('/addCity',[CityController::class,'addCity']);
 Route::post('/changeMicanicStatus/{micanicId}', [MicanicController::class, 'changeMicanicStatus']);
 Route::get('/getTotalPayments', [PaymentController::class, 'getTotalPayments']);
 Route::get('/allOrders', [OrderController::class, 'allOrders']);
+
+Route::get('/showAllMessages', [ContactController::class, 'show']);
+Route::get('/countAllMessages', [ContactController::class, 'countAllMessages']);
+
 
 });
 
@@ -132,7 +147,16 @@ Route::get('/allCities', [CityController::class, 'allCities']);
 Route::get('/allMicanicByCity/{cityId}', [CityController::class, 'allMicanicByCity']);
 Route::get('/allMicanics', [MicanicController::class, 'allMicanics']);
 Route::get('/allServices', [ServiceController::class,'allServices']);
-
 Route::get('/BusyMicanic/{micanicId}', [MicanicController::class,'BusyMicanic']);
 
+
+Route::get('/allServicesCount', [ServiceController::class,'allServicesCount']);
+Route::get('/allordersCount', [ServiceController::class,'allordersCount']);
+Route::get('/allusersCount', [ServiceController::class,'allusersCount']);
+Route::get('/allMicanicCount', [ServiceController::class,'allMicanicCount']);
+Route::get('/allMicanicRating', [ServiceController::class,'allMicanicRating']);
+// Route::get('/getTotalPayments', [PaymentController::class, 'getTotalPayments']);
+// Route::get('/countAllMessages', [ContactController::class, 'countAllMessages']);
+// *************************<contact>************
+Route::post('/storeMessage', [ContactController::class, 'storeMessage']);
 

@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="http://127.0.0.1:8000/frontend/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="http://127.0.0.1:8000/frontend/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="http://127.0.0.1:8000/frontend/images/favicon.png" />
-
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 

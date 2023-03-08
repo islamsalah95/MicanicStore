@@ -7,6 +7,7 @@ use App\Traits\ApiTraits;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\CustomHelpers;
+use App\Mail\VerificationCode;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -20,12 +21,24 @@ class AuthApis extends Controller
 
 
 public function register(AuthRegisterValidation $request){
-$data=$request->only('name','email','password',);
-$data['password']=Hash::make($request->password);
-$user=User::create($data);
+// $data=$request->only('name','email','password',);
+// $data['password']=Hash::make($request->password);
+// $user=User::create($data);
+// $tokens=$user->createToken('Android')->plainTextToken;
+// $user->token='Bearer '.$tokens;
+// return ApiTraits::data(compact('user'),'register success');
+$code=CustomHelpers::generateCode();
+$user = new User;
+$user->name =$request->name;
+$user->email =$request->email;
+$user->password =Hash::make($request->password);
+$user->code =$code;
+$user->save();
 $tokens=$user->createToken('Android')->plainTextToken;
 $user->token='Bearer '.$tokens;
-return ApiTraits::data(compact('user'),'register success');
+Mail::to($user->email)->send(new VerificationCode($code));
+return ApiTraits::data(compact('user'),'register user success');
+
 }
 
 

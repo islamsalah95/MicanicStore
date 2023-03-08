@@ -1,6 +1,9 @@
 <template>
   <div class="main-panel">
       <div class="content-wrapper">
+        <div class="row" v-if="isLoading">
+          <BaseSpinner></BaseSpinner>
+      </div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -14,6 +17,7 @@
                          
                           <th>Order</th>
                           <th>Status</th>
+                          <th>services</th>
                           <th>close</th>
                           <th>Location</th>
 
@@ -28,6 +32,11 @@
 <td>
   <label :class="[items.status== 'open' ? 'badge badge-warning' : 'badge badge-success']">{{items.status== 'open' ? 'In progress' : 'Completed'}}</label>
 </td>
+
+<th>
+<h6 v-for="result in items.service" :key="result.id">{{result.name}}</h6>
+</th>
+
 
 <td>
   <button @click="close" type="submit" class="btn btn-primary mr-2" style="background-color: brown;">close</button>
@@ -45,28 +54,32 @@
             </div>
           </div>
 
-          <div class="row">{{src}}</div>
+          <h1 class="row">{{src}}</h1>
+
       </div>
   </div>
 </template>
 
 <script>
+import BaseSpinner from '../BaseSpinner.vue'
 export default {
 name: "OrderComponent",
 components:{
-},
+    BaseSpinner
+  },
 data() {
   return {
-    items: "",
-    src:""
+    items: '',
+    src:"",
+    isLoading:false
 
   };
 },created(){
+  const headers = { Authorization: localStorage.getItem("token") };
   axios.get(
         `http://127.0.0.1:8000/api/showOpenOrderMicanic`,
-        {'Authorization':localStorage.getItem("token") ,
-        'Accept':'application/json'
-      }
+        { headers }
+
       )
       .then((response) => {
         console.log(response.data.data.results);
@@ -78,6 +91,7 @@ data() {
 },
 methods: {
   link(){
+
        var Latitude=this.items.Latitude;
        var longitude=this.items.longitude;
        var  location= `${Latitude},${longitude}`;
@@ -100,7 +114,10 @@ axios.request(options).then(
 .catch(function (error) {
 	console.error(error);
 });
+
+
   },async close() {
+    this.isLoading=true;
     var orderId=this.items.id;
      await axios.post(`http://127.0.0.1:8000/api/closeOrder/${orderId}`,
           {'Authorization': localStorage.getItem("token") ,
@@ -115,12 +132,22 @@ axios.request(options).then(
           console.log(error);
         });
 
+        this.isLoading=false;
 
     //   return this.$router.push("/PayingsView");
     },
 
 },mounted(){
 
+  var MicanicId=localStorage.getItem("id");
+    Echo.channel(`NewOrd.${MicanicId}`)
+        .listen('NewOrd', (e) => {
+      this.items=e.order;
+
+
+
+
+    });
 },
 };
 </script>

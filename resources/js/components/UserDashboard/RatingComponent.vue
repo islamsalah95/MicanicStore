@@ -66,6 +66,8 @@ export default {
   },
   methods: {
     async Rateme() {
+      const headers = { Authorization: localStorage.getItem("token") };
+
 console.log(typeof(this.rate));
 console.log(typeof(this.comment));
 
@@ -78,20 +80,21 @@ if(typeof(this.comment) !== 'string'  || this.comment == '' ||  this.rate == '' 
             rate: this.rate,
             comment: this.comment,
           },
-          {'Authorization': localStorage.getItem("token") ,
-          'Accept':'application/json'}
+          { headers }
+
         )
         .then((response) => {
           console.log(response.data.data.rate);
-          Notification.success("rate success");
       return this.$router.push("/UserDashboard");
         })
         .catch((error) => {
-          console.log(error.response);
-          if(error.response.status==404){
-            Notification.error("you have alraedy rate this user before");
-          }
+          if (error) {
+            console.log(error.response.request.status) ;
+            Notification.error(error.response.data.message)
+                      }
         });
+        Notification.success("rate success");
+
 }
     },
   },

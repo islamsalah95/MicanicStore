@@ -2,9 +2,10 @@
 
 namespace App\Listeners;
 
+use App\Events\NewOrd;
 use App\Events\PodcastProcessed;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendPodcastNotification
 {
@@ -24,7 +25,7 @@ class SendPodcastNotification
      * @param  \App\Events\PodcastProcessed  $event
      * @return void
      */
-    public function handle(PodcastProcessed $event)
+    public function handle(NewOrd $event)
     {
         //
     }

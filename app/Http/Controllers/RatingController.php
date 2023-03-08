@@ -27,6 +27,7 @@ if($alreadyRate){
 }else{
   $rate = new Rating;
   $rate->user_id =$auth->id;
+  $rate->user_name =$auth->name;
   $rate->micanic_id =$order->micanic_id;
   $rate->order_id =$order->id;
   $rate->rate = $request->rate;

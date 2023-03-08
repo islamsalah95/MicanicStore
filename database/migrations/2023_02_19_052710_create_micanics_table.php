@@ -18,6 +18,7 @@ class CreateMicanicsTable extends Migration
             $table->string('name');
             $table->string('nid_img');
             $table->string('cert_img');
+            $table->string('personal_img');
             $table->string('email')->uique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

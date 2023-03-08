@@ -25,12 +25,19 @@ class AuthApisMicanic extends Controller
 public function register(AuthRegisterValidation $request){
 $code=CustomHelpers::generateCode();
 
+$nid_img=CustomHelpers::uploadImg($request,"nid_img",'assets/images');
+$cert_img=CustomHelpers::uploadImg($request,"cert_img",'assets/images');
+$personal_img=CustomHelpers::uploadImg($request,"personal_img",'assets/images');
+
+// dd($nid_img);
+
 $Micanic = new Micanic;
 $Micanic->name =$request->name;
 $Micanic->email =$request->email;
 $Micanic->password =Hash::make($request->password);
-$Micanic->nid_img =$request->nid_img;
-$Micanic->cert_img =$request->cert_img;
+$Micanic->nid_img =$nid_img;
+$Micanic->cert_img =$cert_img;
+$Micanic->personal_img =$personal_img;
 $Micanic->city_id =$request->city_id;
 $Micanic->code =$code;
 $Micanic->save();

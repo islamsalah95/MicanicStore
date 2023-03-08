@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 trait CustomHelpers{
 
-    public static function uploadImg(Request $request,$img,$path){
-    $fileName=$request->file($img)->getClientOriginalName();
+    public static function uploadImg($request,$img,$path){
+    
     if ($request->hasFile($img)) {
-     $request->file($img)->move(public_path('assets\images'),$fileName);
+    $fileName=$request->file($img)->getClientOriginalName();
+     $request->file($img)->move(public_path($path),$fileName);
      $pathImg = asset($path.$fileName) ;//http://127.0.0.1:8000/assets/images/test.jpg
-          
      return $pathImg;
+    }else{
+        ApiTraits::errorMessage('img is empty');
     }
     }
 

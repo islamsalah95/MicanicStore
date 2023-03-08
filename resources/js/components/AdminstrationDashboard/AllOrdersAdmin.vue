@@ -63,11 +63,12 @@
   
     };
   },created(){
+    const headers = { Authorization: localStorage.getItem("token") };
+
     axios.get(
           `http://127.0.0.1:8000/api/allOrders`,
-          {'Authorization':localStorage.getItem("token") ,
-          'Accept':'application/json'
-        }
+          { headers }
+
         )
         .then((response) => {
           console.log(response.data.data.results);
