@@ -304,10 +304,7 @@
         </div>
       </div>
     </div>
-    <div class="dfdf">fdfdfdf</div>
 
-
-    <div class="zxxzxzx" v-for="micanic in micanics" :key="micanic.id">{{micanic.name}}</div>
     <!-- Blog End -->
       <!-- Footer Start -->
       <Footer></Footer>

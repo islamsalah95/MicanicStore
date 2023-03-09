@@ -10,14 +10,14 @@
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background: #202C45 !important;">
       <ul class="navbar-nav mr-lg-2">
-        
+
 
         <li  v-if="isLogin && type =='user'" class="nav-item  d-none d-lg-flex">
           <router-link to="/UserDashboard" class="nav-link">
             UserDashboard
           </router-link>
         </li>
-        
+
         <li v-if="isLogin && type =='micanic'" class="nav-item  d-none d-lg-flex">
           <router-link to="/MicanicDashboard" class="nav-link">
             MicanicDashboard
@@ -39,12 +39,12 @@
         </li>
 
 
-        <li class="nav-item  p-0 m-0">
+        <li class="nav-item d-none d-lg-flex">
           <router-link to="/services" class="nav-link">
             Services
           </router-link>
         </li>
-        <li class="nav-item  p-0 m-0 ">
+        <li class="nav-item d-none d-lg-flex">
           <router-link to="/micanics" class="nav-link">
             Mecanics
           </router-link>
@@ -56,14 +56,14 @@
             Contact Us
           </router-link>
         </li>
-        
+
       <!-- stack orders -->
         <li v-if="stackOrder && isLogin && type =='user'" class="nav-item dropdown d-flex" @click="setCounter">
           <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
             <i class="typcn typcn-mail"></i>
             <span class="count bg-success">{{ counter }}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">          
+          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
             <a class="dropdown-item preview-item">
               <div class="preview-item-content flex-grow">
                 <p class="font-weight-light small-text mb-0">There is stack order you dont pay for it,you have to pay before create new order or cancel
@@ -76,7 +76,7 @@
             </a>
           </div>
         </li>
-      
+
         <!-- <li class="nav-item dropdown d-flex">
           <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
             <i class="typcn typcn-message-typing"></i>
@@ -211,7 +211,7 @@ export default {
         }else{
             this.isLogin = false;
         }
-        
+
         this.$root.$on("isLogin", (islogin) => {
             this.isLogin = islogin;
             this.type= localStorage.getItem("type");

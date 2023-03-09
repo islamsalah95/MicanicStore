@@ -7214,9 +7214,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -15378,7 +15375,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\na[data-v-152c8205]{\r\n    color: aliceblue;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\na[data-v-152c8205]{\n    color: aliceblue;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63932,7 +63929,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: { to: "/UserDashboard" },
                       },
-                      [_vm._v("\r\n            UserDashboard\r\n          ")]
+                      [_vm._v("\n            UserDashboard\n          ")]
                     ),
                   ],
                   1
@@ -63950,7 +63947,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: { to: "/MicanicDashboard" },
                       },
-                      [_vm._v("\r\n            MicanicDashboard\r\n          ")]
+                      [_vm._v("\n            MicanicDashboard\n          ")]
                     ),
                   ],
                   1
@@ -63970,7 +63967,7 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\r\n            AdminstrationDashboard\r\n          "
+                          "\n            AdminstrationDashboard\n          "
                         ),
                       ]
                     ),
@@ -63986,7 +63983,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/Home" } },
-                  [_vm._v("\r\n            Home\r\n          ")]
+                  [_vm._v("\n            Home\n          ")]
                 ),
               ],
               1
@@ -63994,12 +63991,12 @@ var render = function () {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "nav-item p-0 m-0" },
+              { staticClass: "nav-item d-none d-lg-flex" },
               [
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/services" } },
-                  [_vm._v("\r\n            Services\r\n          ")]
+                  [_vm._v("\n            Services\n          ")]
                 ),
               ],
               1
@@ -64007,12 +64004,12 @@ var render = function () {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "nav-item p-0 m-0" },
+              { staticClass: "nav-item d-none d-lg-flex" },
               [
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/micanics" } },
-                  [_vm._v("\r\n            Mecanics\r\n          ")]
+                  [_vm._v("\n            Mecanics\n          ")]
                 ),
               ],
               1
@@ -64025,7 +64022,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/Contact" } },
-                  [_vm._v("\r\n            Contact Us\r\n          ")]
+                  [_vm._v("\n            Contact Us\n          ")]
                 ),
               ],
               1
@@ -64080,7 +64077,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "There is stack order you dont pay for it,you have to pay before create new order or cancel\r\n                "
+                                    "There is stack order you dont pay for it,you have to pay before create new order or cancel\n                "
                                   ),
                                 ]
                               ),
@@ -64204,9 +64201,9 @@ var render = function () {
                                       },
                                       [
                                         _vm._v(
-                                          "\r\n                  " +
+                                          "\n                  " +
                                             _vm._s(result.created_at) +
-                                            "\r\n                "
+                                            "\n                "
                                         ),
                                       ]
                                     ),
@@ -64263,7 +64260,7 @@ var render = function () {
                           staticClass: "dropdown-item",
                           attrs: { to: "/LoginComponent" },
                         },
-                        [_vm._v("\r\n                Login\r\n              ")]
+                        [_vm._v("\n                Login\n              ")]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -64276,7 +64273,7 @@ var render = function () {
                         },
                         [
                           _vm._v(
-                            "\r\n                Register Users\r\n              "
+                            "\n                Register Users\n              "
                           ),
                         ]
                       )
@@ -64291,7 +64288,7 @@ var render = function () {
                         },
                         [
                           _vm._v(
-                            "\r\n                Register Micancs\r\n              "
+                            "\n                Register Micancs\n              "
                           ),
                         ]
                       )
@@ -67501,17 +67498,9 @@ var render = function () {
       _vm._v(" "),
       _vm._m(4),
       _vm._v(" "),
-      _c("div", { staticClass: "dfdf" }, [_vm._v("fdfdfdf")]),
-      _vm._v(" "),
-      _vm._l(_vm.micanics, function (micanic) {
-        return _c("div", { key: micanic.id, staticClass: "zxxzxzx" }, [
-          _vm._v(_vm._s(micanic.name)),
-        ])
-      }),
-      _vm._v(" "),
       _c("Footer"),
     ],
-    2
+    1
   )
 }
 var staticRenderFns = [
