@@ -7173,47 +7173,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7224,11 +7183,17 @@ __webpack_require__.r(__webpack_exports__);
       orderscount: 0,
       userscount: 0,
       micaniccount: 0,
-      micanics: []
+      micanics: [],
+      micanicrate: []
     };
   },
   components: {
     Footer: _Footer_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    chick: function chick(rate) {
+      return parseInt(rate);
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -7365,14 +7330,16 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       results: [],
+      resultsrate: [],
       isAdmin: localStorage.getItem("type")
     };
   },
   mounted: function mounted() {
     var _this = this;
     axios.get("http://127.0.0.1:8000/api/spacifyMicanicRating/".concat(this.micanicid)).then(function (res) {
-      console.log(res.data.data.results);
       _this.results = res.data.data.results;
+      _this.resultsrate = _this.results.rate;
+      console.log(_this.resultsrate);
     });
   },
   methods: {
@@ -67410,80 +67377,6 @@ var render = function () {
                         _c("h2", [_vm._v(_vm._s(micanic.name))]),
                         _vm._v(" "),
                         _vm._m(3, true),
-                        _vm._v(" "),
-                        micanic.rate[0].rate == 0
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                            ])
-                          : micanic.rate[0].rate == 1
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                            ])
-                          : micanic.rate[0].rate == 2
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                            ])
-                          : micanic.rate[0].rate == 3
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                            ])
-                          : micanic.rate[0].rate == 4
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-regular fa-star" }),
-                            ])
-                          : micanic.rate[0].rate == 5
-                          ? _c("div", { staticClass: "text-light" }, [
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                              _vm._v(" "),
-                              _c("i", { staticClass: "fa-solid fa-star" }),
-                            ])
-                          : _vm._e(),
                       ]),
                     ],
                     1
@@ -67780,7 +67673,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container-fluid py-5" },
     [
       _c("Banner", { attrs: { title: "Micanic Details" } }),
       _vm._v(" "),
@@ -67842,7 +67734,7 @@ var render = function () {
               0
             ),
             _vm._v(" "),
-            _c("small", { staticClass: "pt-1" }, [
+            _c("small", { staticClass: "pt-1 px-2" }, [
               _vm._v("Rate: " + _vm._s(_vm.results.avgRate)),
             ]),
           ]),
@@ -67861,30 +67753,27 @@ var render = function () {
                 _c(
                   "div",
                   { staticClass: "row" },
-                  _vm._l(_vm.results.rate, function (result) {
+                  _vm._l(_vm.resultsrate, function (rate) {
                     return _c(
                       "div",
-                      { staticClass: "col-md-6", attrs: { id: result.id } },
+                      { key: rate.id, staticClass: "col-md-6" },
                       [
                         _c("h4", { staticClass: "mb-4" }, [
-                          _vm._v(_vm._s(result.user_name)),
+                          _vm._v(_vm._s(rate.user_name)),
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "media mb-4" }, [
                           _c("div", { staticClass: "media-body" }, [
-                            _c("h6", [
-                              _vm._v("rate: " + _vm._s(result.rate)),
-                              _c("small"),
-                            ]),
+                            _c("h6", [_vm._v("rate: " + _vm._s(rate.rate))]),
                             _vm._v(" "),
                             _c("h6", [
-                              _c("i", [_vm._v(_vm._s(result.created_at))]),
+                              _c("i", [_vm._v(_vm._s(rate.created_at))]),
                             ]),
                             _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "text-primary mb-2" },
-                              _vm._l(_vm.chick(result.rate), function (i) {
+                              _vm._l(_vm.chick(rate.rate), function (i) {
                                 return _c("i", {
                                   key: i.id,
                                   staticClass: "fas fa-star",
@@ -67893,7 +67782,7 @@ var render = function () {
                               0
                             ),
                             _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(result.comment))]),
+                            _c("p", [_vm._v(_vm._s(rate.comment))]),
                           ]),
                         ]),
                       ]

@@ -160,48 +160,7 @@
                   <a href=""><i class="fab fa-linkedin-in"></i></a>
                   <a href=""><i class="fab fa-instagram"></i></a>
                 </div>
-                <div v-if="micanic.rate[0].rate==0" class="text-light">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div v-else-if="micanic.rate[0].rate==1" class="text-light">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div v-else-if="micanic.rate[0].rate==2" class="text-light">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div v-else-if="micanic.rate[0].rate==3" class="text-light">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div v-else-if="micanic.rate[0].rate==4" class="text-light">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-regular fa-star"></i>
-                </div>
-                <div v-else-if="micanic.rate[0].rate==5" class="text-light">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
+
               </div>
             </div>
           </div>
@@ -324,11 +283,17 @@ export default {
       userscount:0,
       micaniccount:0,
       micanics:[],
+      micanicrate:[]
     };
-  },components:{
+    },components:{
       Footer
     },
-  mounted() {
+    methods:{
+        chick(rate){
+            return parseInt(rate);
+        }
+    },
+    mounted() {
     axios.get("http://127.0.0.1:8000/api/allServices").then((res) => {
         for(let i=0; i<4; i++)
         {
@@ -353,6 +318,7 @@ export default {
         {
             this.micanics.push(res.data.data.results[i])
         }
+
     });
 
   },
