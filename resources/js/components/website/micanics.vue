@@ -1,14 +1,7 @@
 <template>
     <div>
-        <div class="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Team Member</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <Banner title="Team Member"></Banner>
         <div class="team">
             <div class="container">
                 <div class="section-header text-center">
@@ -21,7 +14,7 @@
                             <router-link :to="'/micanics/'+micanic.id">
                                 <div class="team-img">
                                     <img
-                                    src="http://127.0.0.1:8000/frontend/website/img/team-1.jpg"
+                                    :src="micanic.personal_img"
                                     alt="Team Image"
                                     />
                                 </div>
@@ -34,60 +27,21 @@
                                     <a href=""><i class="fab fa-linkedin-in"></i></a>
                                     <a href=""><i class="fab fa-instagram"></i></a>
                                 </div>
-                                <!-- <div v-for="rate in rates" :key="rate.id">
-                                    <div v-if="rate == 0" class="text-light">
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                    <div v-if="rate== 1"  class="text-light">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                    <div v-if="rate == 2"  class="text-light">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                    <div v-if="rate == 3"  class="text-light">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                    <div v-if="rate == 4"  class="text-light">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </div>
-                                    <div v-if="rate == 5"  class="text-light">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <Footer></Footer>
+
     </div>
 </template>
 
 <script>
+  import Banner from "./Banner.vue"
+  import Footer from "./Footer.vue"
 export default {
   data() {
     return {
@@ -96,6 +50,9 @@ export default {
       rates:0
     };
   },
+  components:{
+        Footer,Banner
+    },
   mounted() {
     axios.get("http://127.0.0.1:8000/api/allMicanicRating").then((res) => {
         for(let i=0; i<res.data.data.results.length; i++)

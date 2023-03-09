@@ -87,6 +87,19 @@ class ServiceController extends Controller
 
     }
 
+    public function spacifyMicanicRating($id)
+    {
+        $results=Micanic::where('id',$id)->first();
+           $rate=Rating::where('micanic_id',$results->id)->get();
+            $results->rate=$rate;
+            $avgRate=Rating::where('micanic_id',$results->id)->avg("rate");
+            $results->avgRate=round($avgRate,1);
+
+            return ApiTraits::data(compact('results'),'allMicanicCount dispaly success');
+
+    }
+
+
 
  
 }

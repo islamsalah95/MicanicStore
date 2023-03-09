@@ -27,7 +27,7 @@
     <!-- Carousel End -->
 
     <!-- About Start -->
-    <div class="about">
+    <!-- <div class="about">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6">
@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- About End -->
 
     <!-- Service-->
@@ -147,7 +147,7 @@
                 <router-link :to="'/micanics/'+micanic.id">
                     <div class="team-img">
                         <img
-                        src="http://127.0.0.1:8000/frontend/website/img/team-1.jpg"
+                        :src="micanic.personal_img"
                         alt="Team Image"
                         />
                     </div>
@@ -304,6 +304,10 @@
         </div>
       </div>
     </div>
+    <div class="dfdf">fdfdfdf</div>
+
+
+    <div class="zxxzxzx" v-for="micanic in micanics" :key="micanic.id">{{micanic.name}}</div>
     <!-- Blog End -->
       <!-- Footer Start -->
       <Footer></Footer>
@@ -322,7 +326,7 @@ export default {
       orderscount:0,
       userscount:0,
       micaniccount:0,
-      micanics:[]
+      micanics:[],
     };
   },components:{
       Footer

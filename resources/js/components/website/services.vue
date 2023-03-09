@@ -1,14 +1,8 @@
 <template>
     <div>
-        <div class="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Services</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <!-- Page Header End -->
+      <Banner title="Services"></Banner>
+      <!-- Contact Start -->
         <div class="service">
             <div class="container">
                 <div class="section-header text-center">
@@ -27,14 +21,22 @@
                 </div>
             </div>
         </div>
+       
+        <Footer></Footer>
     </div>
 </template>
 <script>
+  import Banner from "./Banner.vue"
+  import Footer from "./Footer.vue"
+
 export default {
     data(){
         return{
             services:[]
         }
+    },
+    components:{
+        Footer,Banner
     },
     mounted(){
         axios.get("http://127.0.0.1:8000/api/allServices").then((res) => {

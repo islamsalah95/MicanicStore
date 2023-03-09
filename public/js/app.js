@@ -3828,6 +3828,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrderComponent",
@@ -7195,6 +7213,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7252,12 +7274,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _Banner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Banner.vue */ "./resources/js/components/website/Banner.vue");
 //
 //
 //
@@ -7345,29 +7362,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["micanicid"],
   data: function data() {
     return {
-      micanics: [],
-      targetmicanic: [],
-      micanicrate: []
+      results: [],
+      isAdmin: localStorage.getItem("type")
     };
   },
-  props: ["micanicid"],
   mounted: function mounted() {
     var _this = this;
-    axios.get("http://127.0.0.1:8000/api/allMicanicRating").then(function (res) {
-      _this.micanics = res.data.data.results;
-      for (var i = 0; i < _this.micanics.length; i++) {
-        if (_this.micanics[i].id == _this.micanicid) {
-          _this.targetmicanic = _this.micanics[i];
-          for (var _i = 0; _i < _this.targetmicanic.rate.length; _i++) {
-            _this.micanicrate = _this.targetmicanic.rate;
-            console.log(_this.micanicrate);
-          }
-        }
-      }
+    axios.get("http://127.0.0.1:8000/api/spacifyMicanicRating/".concat(this.micanicid)).then(function (res) {
+      console.log(res.data.data.results);
+      _this.results = res.data.data.results;
     });
+  },
+  methods: {
+    chick: function chick(rate) {
+      return parseInt(rate);
+    }
+  },
+  components: {
+    Banner: _Banner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -7384,54 +7401,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _Banner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Banner.vue */ "./resources/js/components/website/Banner.vue");
+/* harmony import */ var _Footer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer.vue */ "./resources/js/components/website/Footer.vue");
 //
 //
 //
@@ -7474,6 +7445,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7481,6 +7454,10 @@ __webpack_require__.r(__webpack_exports__);
       micanicrate: [],
       rates: 0
     };
+  },
+  components: {
+    Footer: _Footer_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Banner: _Banner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -7510,10 +7487,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
+/* harmony import */ var _Banner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Banner.vue */ "./resources/js/components/website/Banner.vue");
+/* harmony import */ var _Footer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer.vue */ "./resources/js/components/website/Footer.vue");
 //
 //
 //
@@ -7542,11 +7517,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       services: []
     };
+  },
+  components: {
+    Footer: _Footer_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Banner: _Banner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -63074,6 +63055,27 @@ var render = function () {
                     "tbody",
                     _vm._l(_vm.results, function (result) {
                       return _c("tr", { key: result.id }, [
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              { attrs: { to: "/micanics/" + result.id } },
+                              [
+                                _c("div", { staticClass: "team-img" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: result.personal_img,
+                                      alt: "Team Image",
+                                    },
+                                  }),
+                                ]),
+                              ]
+                            ),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
                         _c("td", [
                           _vm._v(
                             "\n                                            " +
@@ -63255,6 +63257,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Image")]),
+        _vm._v(" "),
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
@@ -67266,46 +67270,9 @@ var render = function () {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "about" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row align-items-center" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "about-content" }, [
-                _c("p", [
-                  _vm._v(
-                    "\n              Lorem ipsum dolor sit amet elit. In vitae turpis. Donec in\n              hendre dui, vel blandit massa. Ut vestibu suscipi cursus. Cras\n              quis porta nulla, ut placerat risus. Aliquam nec magna eget\n              velit luctus dictum\n            "
-                  ),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "ul",
-                  _vm._l(_vm.services, function (service) {
-                    return _c("li", { key: service.id }, [
-                      _c("i", { staticClass: "far fa-check-circle" }),
-                      _vm._v(_vm._s(service.name) + "\n              "),
-                    ])
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  { staticClass: "btn btn-custom", attrs: { href: "" } },
-                  [_vm._v("Learn More")]
-                ),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "service" }, [
         _c("div", { staticClass: "container" }, [
-          _vm._m(3),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "div",
@@ -67413,7 +67380,7 @@ var render = function () {
       _vm._v(" "),
       _c("div", { staticClass: "team" }, [
         _c("div", { staticClass: "container" }, [
-          _vm._m(4),
+          _vm._m(2),
           _vm._v(" "),
           _c(
             "div",
@@ -67434,7 +67401,7 @@ var render = function () {
                           _c("div", { staticClass: "team-img" }, [
                             _c("img", {
                               attrs: {
-                                src: "http://127.0.0.1:8000/frontend/website/img/team-1.jpg",
+                                src: micanic.personal_img,
                                 alt: "Team Image",
                               },
                             }),
@@ -67445,7 +67412,7 @@ var render = function () {
                       _c("div", { staticClass: "team-text" }, [
                         _c("h2", [_vm._v(_vm._s(micanic.name))]),
                         _vm._v(" "),
-                        _vm._m(5, true),
+                        _vm._m(3, true),
                         _vm._v(" "),
                         micanic.rate[0].rate == 0
                           ? _c("div", { staticClass: "text-light" }, [
@@ -67532,11 +67499,19 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(6),
+      _vm._m(4),
+      _vm._v(" "),
+      _c("div", { staticClass: "dfdf" }, [_vm._v("fdfdfdf")]),
+      _vm._v(" "),
+      _vm._l(_vm.micanics, function (micanic) {
+        return _c("div", { key: micanic.id, staticClass: "zxxzxzx" }, [
+          _vm._v(_vm._s(micanic.name)),
+        ])
+      }),
       _vm._v(" "),
       _c("Footer"),
     ],
-    1
+    2
   )
 }
 var staticRenderFns = [
@@ -67575,33 +67550,6 @@ var staticRenderFns = [
           ]),
         ]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "about-img" }, [
-        _c("img", {
-          attrs: {
-            src: "http://127.0.0.1:8000/frontend/website/img/about.jpg",
-            alt: "Image",
-            width: "250",
-            height: "500",
-          },
-        }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "section-header text-left" }, [
-      _c("p", [_vm._v("About Us")]),
-      _vm._v(" "),
-      _c("h2", [_vm._v("Car Repairing")]),
     ])
   },
   function () {
@@ -67841,166 +67789,186 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "team" }, [
-      _c("div", { staticClass: "container" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _vm._m(2),
-          _vm._v(" "),
+  return _c(
+    "div",
+    { staticClass: "container-fluid py-5" },
+    [
+      _c("Banner", { attrs: { title: "Micanic Details" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row px-xl-5" }, [
+        _c("div", { staticClass: "col-lg-5 pb-5" }, [
           _c(
             "div",
-            { staticClass: "col-8" },
+            {
+              staticClass: "carousel slide",
+              attrs: { id: "product-carousel", "data-interval": "false" },
+            },
             [
-              _c("h1", { staticClass: "pb-3" }, [
-                _vm._v(_vm._s(_vm.targetmicanic.name)),
+              _c("div", { staticClass: "carousel-inner border" }, [
+                _c("div", { staticClass: "carousel-item active" }, [
+                  _c("img", {
+                    staticClass: "w-100 h-100",
+                    attrs: { src: _vm.results.personal_img, alt: "Image" },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm.isAdmin == "admin"
+                  ? _c("div", { staticClass: "carousel-item" }, [
+                      _c("img", {
+                        staticClass: "w-100 h-100",
+                        attrs: { src: _vm.results.cert_img, alt: "Image" },
+                      }),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isAdmin == "admin"
+                  ? _c("div", { staticClass: "carousel-item" }, [
+                      _c("img", {
+                        staticClass: "w-100 h-100",
+                        attrs: { src: _vm.results.nid_img, alt: "Image" },
+                      }),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(0),
               _vm._v(" "),
-              _vm._l(_vm.micanicrate, function (rate) {
-                return _c("div", { key: rate.id, staticClass: "row" }, [
-                  _c("div", { staticClass: "col-4" }, [
-                    rate.rate == 0
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                        ])
-                      : rate.rate == 1
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                        ])
-                      : rate.rate == 2
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                        ])
-                      : rate.rate == 3
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                        ])
-                      : rate.rate == 4
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-regular fa-star" }),
-                        ])
-                      : rate.rate == 5
-                      ? _c("div", [
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fa-solid fa-star" }),
-                        ])
-                      : _vm._e(),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("h3", [_vm._v(_vm._s(rate.comment))]),
-                  ]),
-                ])
-              }),
-            ],
-            2
+              _vm._m(1),
+            ]
           ),
         ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-7 pb-5" }, [
+          _c("h3", { staticClass: "font-weight-semi-bold" }, [
+            _vm._v(_vm._s(_vm.results.name)),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-flex mb-3" }, [
+            _c(
+              "div",
+              { staticClass: "text-primary mb-2" },
+              _vm._l(_vm.chick(_vm.results.avgRate), function (i) {
+                return _c("i", { key: i.id, staticClass: "fas fa-star" })
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("small", { staticClass: "pt-1" }, [
+              _vm._v("Rate: " + _vm._s(_vm.results.avgRate)),
+            ]),
+          ]),
+        ]),
       ]),
-    ]),
-  ])
+      _vm._v(" "),
+      _c("div", { staticClass: "row px-xl-5" }, [
+        _c("div", { staticClass: "col" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "tab-content" }, [
+            _c(
+              "div",
+              { staticClass: "tab-pane fade", attrs: { id: "tab-pane-3" } },
+              [
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.results.rate, function (result) {
+                    return _c(
+                      "div",
+                      { staticClass: "col-md-6", attrs: { id: result.id } },
+                      [
+                        _c("h4", { staticClass: "mb-4" }, [
+                          _vm._v(_vm._s(result.user_name)),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media mb-4" }, [
+                          _c("div", { staticClass: "media-body" }, [
+                            _c("h6", [
+                              _vm._v("rate: " + _vm._s(result.rate)),
+                              _c("small"),
+                            ]),
+                            _vm._v(" "),
+                            _c("h6", [
+                              _c("i", [_vm._v(_vm._s(result.created_at))]),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "text-primary mb-2" },
+                              _vm._l(_vm.chick(result.rate), function (i) {
+                                return _c("i", {
+                                  key: i.id,
+                                  staticClass: "fas fa-star",
+                                })
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(result.comment))]),
+                          ]),
+                        ]),
+                      ]
+                    )
+                  }),
+                  0
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-header" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("h2", [_vm._v("Micanic Details")]),
-          ]),
-        ]),
-      ]),
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-prev",
+        attrs: { href: "#product-carousel", "data-slide": "prev" },
+      },
+      [_c("i", { staticClass: "fa fa-2x fa-angle-left text-dark" })]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "section-header text-center" }, [
-      _c("p", [_vm._v("Meet Our Team")]),
-      _vm._v(" "),
-      _c("h2", [_vm._v("Our Engineers & Workers")]),
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-next",
+        attrs: { href: "#product-carousel", "data-slide": "next" },
+      },
+      [_c("i", { staticClass: "fa fa-2x fa-angle-right text-dark" })]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("div", { staticClass: "team-img" }, [
-        _c("img", {
-          attrs: {
-            src: "http://127.0.0.1:8000/frontend/website/img/team-1.jpg",
-            alt: "Team Image",
+    return _c(
+      "div",
+      {
+        staticClass:
+          "nav nav-tabs justify-content-center border-secondary mb-4",
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "nav-item nav-link",
+            attrs: { "data-toggle": "tab", href: "#tab-pane-3" },
           },
-        }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-4" }, [_c("h5", [_vm._v("Rating")])]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-4" }, [_c("h5", [_vm._v("Comment")])]),
-    ])
+          [_vm._v("Reviews")]
+        ),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -68025,72 +67993,64 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "team" }, [
-      _c("div", { staticClass: "container" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.micanics, function (micanic) {
-            return _c(
-              "div",
-              { key: micanic.id, staticClass: "col-lg-3 col-md-6" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "team-item" },
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: "/micanics/" + micanic.id } },
-                      [
-                        _c("div", { staticClass: "team-img" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "http://127.0.0.1:8000/frontend/website/img/team-1.jpg",
-                              alt: "Team Image",
-                            },
-                          }),
-                        ]),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "team-text" }, [
-                      _c("h2", [_vm._v(_vm._s(micanic.name))]),
+  return _c(
+    "div",
+    [
+      _c("Banner", { attrs: { title: "Team Member" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "team" }, [
+        _c("div", { staticClass: "container" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.micanics, function (micanic) {
+              return _c(
+                "div",
+                { key: micanic.id, staticClass: "col-lg-3 col-md-6" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "team-item" },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/micanics/" + micanic.id } },
+                        [
+                          _c("div", { staticClass: "team-img" }, [
+                            _c("img", {
+                              attrs: {
+                                src: micanic.personal_img,
+                                alt: "Team Image",
+                              },
+                            }),
+                          ]),
+                        ]
+                      ),
                       _vm._v(" "),
-                      _vm._m(2, true),
-                    ]),
-                  ],
-                  1
-                ),
-              ]
-            )
-          }),
-          0
-        ),
-      ]),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-header" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("h2", [_vm._v("Team Member")]),
-          ]),
+                      _c("div", { staticClass: "team-text" }, [
+                        _c("h2", [_vm._v(_vm._s(micanic.name))]),
+                        _vm._v(" "),
+                        _vm._m(1, true),
+                      ]),
+                    ],
+                    1
+                  ),
+                ]
+              )
+            }),
+            0
+          ),
         ]),
       ]),
-    ])
-  },
+      _vm._v(" "),
+      _c("Footer"),
+    ],
+    1
+  )
+}
+var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -68146,56 +68106,48 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "service" }, [
-      _c("div", { staticClass: "container" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.services, function (service) {
-            return _c(
-              "div",
-              { key: service.id, staticClass: "col-lg-3 col-md-6" },
-              [
-                _c("div", { staticClass: "service-item" }, [
-                  _c("h3", [_vm._v(_vm._s(service.name))]),
-                  _vm._v(" "),
-                  _c("h4", [_vm._v("Price: " + _vm._s(service.price))]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor"
-                    ),
+  return _c(
+    "div",
+    [
+      _c("Banner", { attrs: { title: "Services" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "service" }, [
+        _c("div", { staticClass: "container" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.services, function (service) {
+              return _c(
+                "div",
+                { key: service.id, staticClass: "col-lg-3 col-md-6" },
+                [
+                  _c("div", { staticClass: "service-item" }, [
+                    _c("h3", [_vm._v(_vm._s(service.name))]),
+                    _vm._v(" "),
+                    _c("h4", [_vm._v("Price: " + _vm._s(service.price))]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor"
+                      ),
+                    ]),
                   ]),
-                ]),
-              ]
-            )
-          }),
-          0
-        ),
-      ]),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-header" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("h2", [_vm._v("Services")]),
-          ]),
+                ]
+              )
+            }),
+            0
+          ),
         ]),
       ]),
-    ])
-  },
+      _vm._v(" "),
+      _c("Footer"),
+    ],
+    1
+  )
+}
+var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement

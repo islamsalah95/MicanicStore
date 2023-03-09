@@ -155,6 +155,8 @@ Route::get('/allordersCount', [ServiceController::class,'allordersCount']);
 Route::get('/allusersCount', [ServiceController::class,'allusersCount']);
 Route::get('/allMicanicCount', [ServiceController::class,'allMicanicCount']);
 Route::get('/allMicanicRating', [ServiceController::class,'allMicanicRating']);
+Route::get('/spacifyMicanicRating/{id}', [ServiceController::class,'spacifyMicanicRating']);
+
 // Route::get('/getTotalPayments', [PaymentController::class, 'getTotalPayments']);
 // Route::get('/countAllMessages', [ContactController::class, 'countAllMessages']);
 // *************************<contact>************

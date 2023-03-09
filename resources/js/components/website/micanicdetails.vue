@@ -1,119 +1,114 @@
 <template>
-    <div>
-        <div class="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                    <h2>Micanic Details</h2>
-                </div>
+      
+    <div class="container-fluid py-5">
+        <Banner title="Micanic Details"></Banner>
+   
+        <div class="row px-xl-5">
+                <div class="col-lg-5 pb-5">
+                    <div id="product-carousel" class="carousel slide" data-interval="false">
+                        <div class="carousel-inner border">
+                            <!-- personal_img -->
+                            <div class="carousel-item active">
+                                <img class="w-100 h-100" :src="results.personal_img" alt="Image">
+                            </div>
+                          
+                          <!-- cert_img -->
+                            <div v-if="isAdmin=='admin'" class="carousel-item">
+                                <img class="w-100 h-100" :src="results.cert_img" alt="Image">
+                            </div>
+                            <!-- nid_img -->
+                            <div v-if="isAdmin=='admin'" class="carousel-item">
+                                <img class="w-100 h-100" :src="results.nid_img" alt="Image">
+                            </div>
 
+                        </div>
+                        <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                            <i class="fa fa-2x fa-angle-left text-dark"></i>
+                        </a>
+                        <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                            <i class="fa fa-2x fa-angle-right text-dark"></i>
+                        </a>
+                    </div>
+                
+                
+                
+                
+                </div>
+    
+                <div class="col-lg-7 pb-5">
+                    <h3 class="font-weight-semi-bold">{{ results.name }}</h3>
+                    <div class="d-flex mb-3">
+                        <div class="text-primary mb-2">
+                            <i v-for="i in chick(results.avgRate)" :key="i.id" class="fas fa-star"></i>
+                        </div>
+                        <small class="pt-1">Rate: {{ results.avgRate }}</small>
+                    </div>
+    
+    
                 </div>
             </div>
-        </div>
-        <div class="team">
-            <div class="container">
-                <div class="section-header text-center">
-                    <p>Meet Our Team</p>
-                    <h2>Our Engineers & Workers</h2>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="team-img" >
-                            <img
-                                src="http://127.0.0.1:8000/frontend/website/img/team-1.jpg"
-                                alt="Team Image"
-                            />
-                        </div>
+            
+            <div class="row px-xl-5">
+                <div class="col">
+                    <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                        <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews</a>
                     </div>
-                    <div class="col-8">
-                        <h1 class="pb-3">{{ targetmicanic.name }}</h1>
-                        <div class="row">
-                            <div class="col-4">
-                                <h5>Rating</h5>
-                            </div>
-                            <div class="col-4">
-                                <h5>Comment</h5>
-                            </div>
-                        </div>
-                        <div class="row"  v-for="rate in micanicrate" :key="rate.id">
-                            <div class="col-4">
-                                <div v-if="rate.rate == 0">
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
+                    <div class="tab-content">
+    
+    
+                        <div class="tab-pane fade" id="tab-pane-3">
+                            <div class="row">
+                               
+                               
+                                <div v-for="result in results.rate" :id="result.id" class="col-md-6">
+                                    <h4 class="mb-4">{{result.user_name}}</h4>
+                                    <div class="media mb-4">
+                                        <div class="media-body">
+                                            <h6>rate: {{result.rate}}<small></i></small></h6>
+                                            <h6><i>{{result.created_at}}</i></small></h6>
+                                            <div class="text-primary mb-2">
+                                                <i v-for="i in chick(result.rate)" :key="i.id" class="fas fa-star"></i>
+                                            </div>
+                                            <p>{{result.comment}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div v-else-if="rate.rate == 1">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                </div>
-                                <div v-else-if="rate.rate == 2">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                </div>
-                                <div v-else-if="rate.rate == 3">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                </div>
-                                <div v-else-if="rate.rate == 4">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-regular fa-star"></i>
-                                </div>
-                                <div v-else-if="rate.rate == 5">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <h3>{{ rate.comment }}</h3>
+    
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+     </div>
+        <!-- Shop Detail End -->
+
 </template>
 <script>
+import Banner from "./Banner.vue"
+
 export default {
+props: ["micanicid"],
   data() {
     return {
-      micanics: [],
-      targetmicanic: [],
-      micanicrate: [],
+
+      results: [],
+      isAdmin:localStorage.getItem("type")
+
     };
   },
-  props: ["micanicid"],
   mounted() {
-    axios.get("http://127.0.0.1:8000/api/allMicanicRating").then((res) => {
-      this.micanics = res.data.data.results;
-      for (let i = 0; i < this.micanics.length; i++) {
-        if (this.micanics[i].id == this.micanicid) {
-          this.targetmicanic = this.micanics[i];
-
-          for (let i = 0; i < this.targetmicanic.rate.length; i++) {
-            this.micanicrate = this.targetmicanic.rate;
-            console.log(this.micanicrate);
-          }
-        }
-      }
+    axios.get(`http://127.0.0.1:8000/api/spacifyMicanicRating/${this.micanicid}`).then((res) => {
+     console.log(res.data.data.results);
+     this.results=res.data.data.results
     });
-  },
+  },methods:{
+    chick(rate){
+return parseInt(rate);
+    }
+
+  },components:{
+    Banner
+    },
 };
 </script>

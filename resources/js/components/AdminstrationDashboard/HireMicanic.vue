@@ -11,6 +11,8 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Image</th>
+
                                             <th>ID</th>
 
                                             <th>Name</th>
@@ -26,10 +28,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+
+
+
                                         <tr
                                             v-for="result in results"
                                             :key="result.id"
                                         >
+                                        <td>
+                                            <router-link :to="'/micanics/'+result.id">
+                                                <div class="team-img">
+                                                    <img
+                                                    :src="result.personal_img"
+                                                    alt="Team Image"
+                                                    />
+                                                </div>
+                                            </router-link>                               
+                                         </td>
+
+
                                             <td>
                                                 {{ result.id }}
                                             </td>
