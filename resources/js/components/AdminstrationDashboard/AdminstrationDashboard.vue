@@ -33,6 +33,13 @@
                         Hire Micanic Orders
                     </router-link>
                 </li>
+
+                <li class="nav-item">
+                    <router-link to="/ContactMessages" class="nav-link">
+                        Contact Messages
+                    </router-link>
+                </li>
+                
             </ul>
         </nav>
 

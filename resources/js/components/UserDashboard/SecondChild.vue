@@ -89,9 +89,12 @@ export default {
     
     ,methods: {
         chickout(){
+            const headers = { Authorization: localStorage.getItem("token") };
+
        const MicaniId=this.$route.params.micanicId;
        const selectme=this.select;
-      const go=this.$router.replace("/chickOutComponent");
+        var OrderComponent=this.$router.replace("/OrderComponent");
+       var chickOutComponent=this.$router.replace("/chickOutComponent");
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -106,24 +109,28 @@ export default {
                         longitude:position.coords.longitude,
                         service_id:selectme,
                     },
-                    {'Authorization': localStorage.getItem("token") ,
-                        'Accept':'application/json'
-                    }
-                    )
-                    .then(async (response) => {
+                    { headers }
 
-                        console.log(response.data.data.order);
-                        Notification.success("services add success");
-                        return go;
+                    )
+                    .then(async (res) => {
+                        // console.log(response.data.data.order);
+                    //     if (res.response.request.status==200) {
+                    //     Notification.success("add success");
+                    //     return chickOutComponent;
+                    //   }
 
 
                     })
-                    .catch((error) =>{ 
-                        if (error) {
-                        Notification.error("there is order is open should finesh first");
-                       return this.$router.replace("/OrderComponent");
+                    .catch(function(error){ 
+                     console.log(error.response.request.status) ;  
+                      Notification.error(error.response.data.message)
+                         if (error.response.request.status==500) {
+
+                              this.$router.replace("/OrderComponent");       
+                                           }
+                      else{
+                        this.$router.replace("/chickOutComponent");       
                       }
-                        console.log(error)   
                     
                     });
         }

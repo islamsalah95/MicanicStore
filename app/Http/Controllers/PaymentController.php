@@ -7,12 +7,14 @@ use Stripe\Stripe;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Order_service;
+use App\Events\NewOrd;
+use App\Models\Micanic;
 use App\Models\Payment;
 use App\Models\payments;
 use Stripe\StripeClient;
 use App\Traits\ApiTraits;
 use Illuminate\Http\Request;
+use App\Models\Order_service;
 use App\Traits\CustomHelpers;
 use App\Http\Requests\StripeRequest;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +31,15 @@ class PaymentController extends Controller
         $user=Auth::guard('sanctum')->user();
 
         $order = Order::where('user_id',$user->id)->where('status','open')->first();
+
+        if(!$order){
+            return ApiTraits::errorMessage("you dont have order must create order first");
+        }
+
+        if($order->Payment){
+            return ApiTraits::errorMessage("you have already pay for this order");
+        }
+
         $results=$order->Service;
         $results=ServiceResource::collection($order->Service);
          $sums=0;
@@ -55,12 +66,18 @@ class PaymentController extends Controller
  
  
 
+        //send  pusher notification order with services
+        $order->service=$order->Service;
+        broadcast(new NewOrd($order,$order->micanic_id))->toOthers();
+        //uodate  micanic status working to stop ask for orders users
+        Micanic::where('id',$order->micanic_id)->update(['status' => 'Busy']);
+
+
         $payments = new Payment; 
         $payments->total_price = $sums ;
         $payments->order_id=$order->id  ;
         $payments->save();
 
-         Order_service::where('order_id',$order->id)->delete();
          
         return ApiTraits::data(compact('payments'),'results success');
          

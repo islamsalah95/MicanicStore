@@ -27,6 +27,7 @@ if($alreadyRate){
 }else{
   $rate = new Rating;
   $rate->user_id =$auth->id;
+  $rate->user_name =$auth->name;
   $rate->micanic_id =$order->micanic_id;
   $rate->order_id =$order->id;
   $rate->rate = $request->rate;
@@ -63,7 +64,7 @@ return ApiTraits::data(compact('rate'),'results success');
 
       foreach ($micanics as $micanic) {
         $rate=Rating::where('micanic_id',$micanic->id)->avg("rate");
-        $newArray = array('id'=>$micanic->id,'name'=>$micanic->name,'email'=>$micanic->email,'status_working'=>$micanic->status_working,'rate'=>round($rate,1));
+        $newArray = array('personal_img'=>$micanic->personal_img,'id'=>$micanic->id,'name'=>$micanic->name,'email'=>$micanic->email,'status_working'=>$micanic->status_working,'rate'=>round($rate,1));
         array_push($results, $newArray);
       }
   

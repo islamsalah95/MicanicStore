@@ -126,8 +126,7 @@ export default {
                         // this.$store.dispatch("user", response.data.data.user);
                       
                         await this.$root.$emit("isLogin", true);
-                        Notification.success("login success");
-
+                        // Notification.success("login success");
 
  if(response.data.data.user.type == 'user'){ this.$router.replace("/UserDashboard");} 
  else if(response.data.data.user.type == 'micanic'){ this.$router.replace("/MicanicDashboard");}

@@ -14,20 +14,27 @@ import CloseOrders from "./components/MicanicDashboard/CloseOrders.vue";
 
 import AdminstrationDashboard from "./components/AdminstrationDashboard/AdminstrationDashboard.vue";
 import FirstAdmin from "./components/AdminstrationDashboard/FirstAdmin.vue";
+import ContactMessages from "./components/AdminstrationDashboard/ContactMessages.vue";
 import addCityService from "./components/AdminstrationDashboard/addCityService.vue";
 import AllOrdersAdmin from "./components/AdminstrationDashboard/AllOrdersAdmin.vue";
 import AllpPaymentsAdmin from "./components/AdminstrationDashboard/AllpPaymentsAdmin.vue";
 import HireMicanic from "./components/AdminstrationDashboard/HireMicanic.vue";
 import Home from "./components/website/Home.vue";
+import Contact from "./components/website/Contact.vue";
 
 import LoginComponent from "./components/auth/LoginComponent.vue"
 
 
 import ResetPass from "./components/auth/ResetPass.vue"
 import UpdatePass from "./components/auth/UpdatePass.vue"
+import VerifyPass from "./components/auth/VerifyPass.vue"
 import RegisterUsersComponent from "./components/auth/RegisterUsersComponent.vue"
 import RegisterMicancsComponent from "./components/auth/RegisterMicancsComponent.vue"
 import RatingComponent from "./components/UserDashboard/RatingComponent.vue"
+
+import services from "./components/website/services.vue";
+import micanics from "./components/website/micanics.vue";
+import micanicdetails from "./components/website/micanicdetails.vue";
 
 
 
@@ -83,6 +90,8 @@ export const routes = [
       {path: '/AllOrdersAdmin',component: AllOrdersAdmin},
       {path: '/AllpPaymentsAdmin',component: AllpPaymentsAdmin},
       {path: '/HireMicanic',component: HireMicanic},
+      {path: '/ContactMessages',component: ContactMessages},
+
   
 
     ],
@@ -99,15 +108,21 @@ export const routes = [
 
 
 
-    
     { path: '/',component:Home},
+    { path: '/Contact',component:Contact},
     { path: '/LoginComponent',component:LoginComponent},
     { path: '/ResetPass',component:ResetPass},
     { path: '/UpdatePass',component:UpdatePass},
+      { path: '/VerifyPass',component:VerifyPass},
     { path: '/RegisterUsersComponent',component:RegisterUsersComponent},
     { path: '/RegisterMicancsComponent',component:RegisterMicancsComponent},
+
+    { path: '/services',component:services},
+    { path: '/micanics',component:micanics},
+    { path: '/micanics/:micanicid', props:true, component:micanicdetails},
+    
     { path: '/RatingComponent',component:RatingComponent,
-    beforeEnter: (to, from,next) => {
+     beforeEnter: (to, from,next) => {
       const token=localStorage.getItem('token')
       const type=localStorage.getItem('type');
 

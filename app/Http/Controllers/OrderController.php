@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Order;
+use App\Events\NewOrd;
 use App\Models\Micanic;
 use App\Models\Service;
 use App\Traits\ApiTraits;
@@ -17,8 +18,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ServiceResource;
 use App\Http\Requests\StoreOrderRequest;
+use App\Models\Payment;
 use App\Notifications\MicanicNotification;
 use Illuminate\Support\Facades\Notification;
+use Stripe\Payout;
 
 class OrderController extends Controller
 {
@@ -26,19 +29,31 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+
+    //chick if user have open order return error
     $auth=Auth::guard('sanctum')->user();
     $getOrder =Order::where('user_id', $auth->id)->where('status','open')->first();
 
-    
-    $results = Micanic::where('id',$request->micanic_id)->first();
-    $results= $results->Order;
-    foreach ($results as $result ) {
-    if ($result->status=='open' ) {
-        break ;
-        return ApiTraits::errorMessage('this micanic is busy success');
-    }}        
+    //chick if user have open order not payment
+    if ($getOrder) {
+        $getPayment =Payment::where('order_id', $getOrder->id)->first();
+        if ( !$getPayment) {
+            return ApiTraits::errorMessage('user have open order not payment must pay first');
+        }
+    }
+
+
+    // //chick if micanic have open order busy return error
+    // $results = Micanic::where('id',$request->micanic_id)->first();
+    // $results= $results->Order;
+    // foreach ($results as $result ) {
+    // if ($result->status=='open' ) {
+    //     break ;
+    //     return ApiTraits::errorMessage('this micanic is busy success');
+    // }}        
 
     if($getOrder==null){
+    //create order and add service to order
     $order = new Order;
     $order->micanic_id = $request->micanic_id;
     $order->user_id = $auth->id ;
@@ -51,25 +66,23 @@ class OrderController extends Controller
             'service_id' => $request->service_id[$i]
         ]);
         }  
+        // $orderN = Order::where('user_id',$auth->id)->where('status','open')->first();
+        // $results=$orderN->Service;
+        // $results=ServiceResource::collection($orderN->Service);
+        // $order->servicesName = $results;
+            
+        // //send  pusher notification
+        // broadcast(new NewOrd($order,$request->micanic_id))->toOthers();
 
-        $orderN = Order::where('user_id',$auth->id)->where('status','open')->first();
-        $results=$orderN->Service;
-        $results=ServiceResource::collection($orderN->Service);
-        $order->servicesName = $results;
-        
-        // $micanicNotify=Micanic::find($request->micanic_id);
-        // $micanicNotify->notify(new MicanicNotification($order));
+        // //uodate  micanic status working to stop ask for orders users
+        // Micanic::where('id',$request->micanic_id)->update(['status' => 'Busy']);
 
-        broadcast(new PodcastProcessed($order))->toOthers();
-       
-        Micanic::where('id',$request->micanic_id)->update(['status' => 'Busy']);
+        return ApiTraits::data(compact('order'),'results success');
 
     }else{
-        return ApiTraits::errorMessage('you have an open order pleasr close first');
-
+        return ApiTraits::errorMessage('you have an open order pleasr waiting finesh first',500);
     }
 
-     return ApiTraits::data(compact('order'),'results success');
     }
 
 
@@ -101,13 +114,65 @@ class OrderController extends Controller
     {
         $auth=Auth::guard('sanctum')->user();
         $results = Order::where('status','open')->where('micanic_id',$auth->id)->first();
-         return ApiTraits::data(compact('results'),'results success');
+            if ($results) {
+                $isPayment=Payment::where('order_id',$results->id)->first();
+                if ($isPayment) {
+                    $results->service=$results->Service;
+                    return ApiTraits::data(compact('results'),'results success');           
+                 }else{
+                    return ApiTraits::successMessage('dont have orders yet');           
+                 }          
+             }
+
+
     }
+
+
     public function allOrders()
     {
         $results = Order::all();
          return ApiTraits::data(compact('results'),'results success');
     }
 
+    
+
+
+    public function StackOrders()
+    {
+        $auth=Auth::guard('sanctum')->user();
+        $result = Order::where('status','open')->where('user_id',$auth->id)->first();
+
+            if ($result) {
+                $isPayment=Payment::where('order_id',$result->id)->first();
+                if ($isPayment) {
+                    return ApiTraits::successMessage('dont have stack orders');   
+                 }else{
+                    return ApiTraits::data(compact('result'),'there is stack order');           
+                 }          
+             }else{
+                return ApiTraits::successMessage('dont have open orders');   
+             }
+
+
+    }
+
+    public function CloseStackOrders()
+    {
+        $auth=Auth::guard('sanctum')->user();
+        $result = Order::where('status','open')->where('user_id',$auth->id)->first();
+
+            if ($result) {
+                $isPayment=Payment::where('order_id',$result->id)->first();
+                if ($isPayment) {
+                    return ApiTraits::successMessage('dont have stack orders');   
+                 }else{
+            Order::where('user_id',$auth->id)->where('status', 'open')->delete();
+                }          
+             }else{
+                return ApiTraits::successMessage('dont have open orders');   
+             }
+
+
+    }
 
 }

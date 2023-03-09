@@ -11,6 +11,8 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Image</th>
+
                                             <th>ID</th>
 
                                             <th>Name</th>
@@ -26,10 +28,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+
+
+
                                         <tr
                                             v-for="result in results"
                                             :key="result.id"
                                         >
+                                        <td>
+                                            <router-link :to="'/micanics/'+result.id">
+                                                <div class="team-img">
+                                                    <img
+                                                    :src="result.personal_img"
+                                                    alt="Team Image"
+                                                    />
+                                                </div>
+                                            </router-link>                               
+                                         </td>
+
+
                                             <td>
                                                 {{ result.id }}
                                             </td>
@@ -115,13 +133,14 @@ export default {
     methods: {
 switchStatus(micanicId){
 if(this.status_working == 'accept'  || this.status_working == 'block'  ){
+    const headers = { Authorization: localStorage.getItem("token") };
   axios.post(
     `http://127.0.0.1:8000/api/changeMicanicStatus/${micanicId}`,
     {
       status_working:this.status_working,
     },
-    {'Authorization': localStorage.getItem("token") ,
-    'Accept':'application/json'}
+    { headers }
+
   )
   .then((response) => {
     console.log(response.data.data.results);

@@ -15,6 +15,7 @@ class Rating extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'user_name',
         'micanic_id',
         'order_id',
         'rate',

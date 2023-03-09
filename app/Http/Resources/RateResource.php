@@ -17,6 +17,9 @@ class RateResource extends JsonResource
         // return parent::toArray($request);
         return [
             'rate' => $this->rate,
+            'user_name' => $this->rate,
+            'comment' => $this->comment,
+            'created_at' => $this->created_at,            
         ];
     }
 }

@@ -98,6 +98,8 @@ export default {
   methods: {
     async pay() {
       this.isLoading=true
+      const headers = { Authorization: localStorage.getItem("token") };
+
      await axios.post(
           `http://127.0.0.1:8000/api/paymentStore`,
           {
@@ -106,20 +108,24 @@ export default {
             exp_year: this.exp_year,
             cvc: this.cvc,
           },
-          {'Authorization': localStorage.getItem("token") ,
-          'Accept':'application/json'}
+          { headers }
+
         )
         .then((response) => {
           console.log(response.data);
+            Notification.success("payment success");
+            this.isLoading=false
         })
         .catch((error) => {
-          console.log(error);
+          if (error) {
+            console.log(error.response.request.status) ;
+            Notification.error(error.response.data.message)
+            this.isLoading=false
+            this.$router.replace("/OrderComponent");
+                      }
         });
 
-      this.isLoading=false
-      Notification.success("payment success");
-
-    //   return this.$router.push("/PayingsView");
+        this.isLoading=false
     },
   },
 };

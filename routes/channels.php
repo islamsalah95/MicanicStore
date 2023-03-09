@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('channeMicanic', function () {
     return true;
 });
+
 Broadcast::channel('App.Models.Micanic.{id}', function (Micanic $Micanic, $id) {
     return (int) $Micanic->id === (int) $id;
 });
 
+Broadcast::channel('NewOrd.{Micanicid}', function () {
+    return true;
+});
 
 
