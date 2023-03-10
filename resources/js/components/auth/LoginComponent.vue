@@ -133,8 +133,13 @@ export default {
  else{this.$router.replace("/AdminstrationDashboard");}    
 
                     })
-                    .catch((error) => console.log(error));
+                    .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
             }
+                        this.email= ""
+                        this.password=""
         },
     },
 };

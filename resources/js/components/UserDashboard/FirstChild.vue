@@ -125,8 +125,10 @@ export default {
                 console.log(response.data.data.results);
                 this.items = response.data.data.results;
             })
-            .catch((error) => console.log(error));
-
+            .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
 
             this.$store.state.ress=this.results;
 
@@ -142,8 +144,10 @@ export default {
                     this.micanics = response.data.data.results;
 
                 })
-                .catch((error) => console.log(error));
-
+                .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
             console.log(this.select);
         },
     },

@@ -11,7 +11,13 @@ justify-content: center;
 "
 >
     <div class="col-8">
+        <div v-if="isLoading">
+            <BaseSpinner></BaseSpinner>
+        </div>
+       
         <div class="card" style="margin-top:170px; text-align: center;">
+          
+          
             <div class="card-body">
                 <form class="forms-sample" @submit.prevent="register">
                    
@@ -109,13 +115,21 @@ justify-content: center;
 </template>
 
 <script>
+import BaseSpinner from '../BaseSpinner.vue'
+
 export default {
+    components:{
+    BaseSpinner
+  },
     data() {
         return {
             name: "islam",
             email: "user98798@gmail.com",
             password: "@User1995",
             password_confirmation: "@User1995",
+            password_confirmation: "@User1995",
+            isLoading:false,
+
 
             emailVal: false,
             passwordVal: false,
@@ -127,7 +141,9 @@ export default {
     },
     mounted() {},
     methods: {
-        register() {
+      async  register() {
+        this.isLoading=true
+
             this.emailVal = false;
             this.passwordVa = false;
             this.nameVal = false;
@@ -155,7 +171,8 @@ export default {
                 this.nameVal = true;
             }
             else {
-                axios
+                this.isLoading=true
+                await  axios
                     .post("http://127.0.0.1:8000/api/register", {
                         name: this.name,
                         email: this.email,
@@ -170,11 +187,25 @@ export default {
                         res.status; // HTTP status
                         console.log(res.data.data);
                         Notification.success();
+                        this.name=""
+                        this.email=""
+                        this.password=""
+                       this.password_confirmation=""
                         this.$router.replace("/VerifyPass")
                         }
                     })
-                    .catch((error) => console.log(error));
+                    .catch(function(error){
+                        console.log(error)
+                       if(error.response.data.errors.email){
+                        Notification.error(error.response.data.errors.email)
+                       }
+
+                    });
+                    this.isLoading=false
             }
+
+            this.isLoading=false
+
         },
     },
 };

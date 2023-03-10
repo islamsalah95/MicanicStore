@@ -4185,6 +4185,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.results = response.data.data.results;
     })["catch"](function (error) {
       console.log(error);
+      Notification.error(error.response.data.message);
     });
   },
   methods: {}
@@ -4296,6 +4297,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       _this.items = response.data.data.results;
     })["catch"](function (error) {
       console.log(error);
+      Notification.error(error.response.data.message);
     });
   },
   methods: {
@@ -4320,7 +4322,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.request(options).then(function (response) {
         _this2.src = "".concat(response.data.results[2].address, " ,street ").concat(response.data.results[2].street);
       })["catch"](function (error) {
-        console.error(error);
+        console.log(error);
+        Notification.error(error.response.data.message);
       });
     },
     close: function close() {
@@ -4342,6 +4345,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.items = null;
               })["catch"](function (error) {
                 console.log(error);
+                Notification.error(error.response.data.message);
               });
             case 4:
               _this3.isLoading = false;
@@ -4862,7 +4866,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(response.data.data.results);
       _this.items = response.data.data.results;
     })["catch"](function (error) {
-      return console.log(error);
+      console.log(error);
+      Notification.error(error.response.data.message);
     });
     this.$store.state.ress = this.results;
   },
@@ -4879,7 +4884,8 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response.data.data.results);
         _this2.micanics = response.data.data.results;
       })["catch"](function (error) {
-        return console.log(error);
+        console.log(error);
+        Notification.error(error.response.data.message);
       });
       console.log(this.select);
     }
@@ -4966,6 +4972,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.results = response.data.data.results;
     })["catch"](function (error) {
       console.log(error);
+      Notification.error(error.response.data.message);
     });
   },
   methods: {}
@@ -5053,6 +5060,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.results = response.data.data.results;
     })["catch"](function (error) {
       console.log(error);
+      Notification.error(error.response.data.message);
     });
   },
   methods: {}
@@ -5518,6 +5526,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5531,7 +5567,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       exp_month: 10,
       exp_year: 2024,
       cvc: 123,
-      isLoading: false
+      isLoading: false,
+      vaLnumber: false,
+      vaLexp_month: false,
+      vaLexp_year: false,
+      vaLcvc: false
     };
   },
   methods: {
@@ -5546,7 +5586,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               headers = {
                 Authorization: localStorage.getItem("token")
               };
-              _context.next = 4;
+              if (!(isNaN(_this.number) || _this.number == '' || _this.number.toString().length !== 16)) {
+                _context.next = 6;
+                break;
+              }
+              _this.vaLnumber = true;
+              _context.next = 21;
+              break;
+            case 6:
+              if (!(isNaN(_this.exp_month) || _this.exp_month == '' || _this.exp_month.toString().length > 2)) {
+                _context.next = 10;
+                break;
+              }
+              _this.vaLexp_month = true;
+              _context.next = 21;
+              break;
+            case 10:
+              if (!(isNaN(_this.exp_year) || _this.exp_year == '' || _this.exp_year.toString().length !== 4)) {
+                _context.next = 14;
+                break;
+              }
+              _this.vaLexp_year = true;
+              _context.next = 21;
+              break;
+            case 14:
+              if (!(isNaN(_this.cvc) || _this.cvc == '' || _this.cvc.toString().length !== 3)) {
+                _context.next = 18;
+                break;
+              }
+              _this.vaLcvc = true;
+              _context.next = 21;
+              break;
+            case 18:
+              _context.next = 20;
               return axios.post("http://127.0.0.1:8000/api/paymentStore", {
                 number: _this.number,
                 exp_month: _this.exp_month,
@@ -5558,17 +5630,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(response.data);
                 Notification.success("payment success");
                 _this.isLoading = false;
+                _this.$router.replace("/OrderComponent");
               })["catch"](function (error) {
                 if (error) {
                   console.log(error.response.request.status);
                   Notification.error(error.response.data.message);
                   _this.isLoading = false;
-                  _this.$router.replace("/OrderComponent");
                 }
               });
-            case 4:
+            case 20:
               _this.isLoading = false;
-            case 5:
+            case 21:
+              _this.isLoading = false;
+            case 22:
             case "end":
               return _context.stop();
           }
@@ -5733,10 +5807,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     return _ref.apply(this, arguments);
                   };
                 }())["catch"](function (error) {
-                  return console.log(error);
+                  console.log(error);
+                  Notification.error(error.response.data.message);
                 });
               }
-            case 5:
+              _this.email = "";
+              _this.password = "";
+            case 7:
             case "end":
               return _context2.stop();
           }
@@ -5805,325 +5882,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-      nid_img: "",
-      cert_img: "",
-      personal_img: "",
-      city_id: "",
-      select: "",
-      items: [],
-      nameVal: false,
-      emailVal: false,
-      passwordVal: false,
-      password_confirmationVal: false,
-      nid_imgVal: false,
-      cert_imgVal: false,
-      personal_imgVal: false,
-      city_idVal: false
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-    axios.get("http://127.0.0.1:8000/api/allCities").then(function (response) {
-      _this.items = response.data.data.results;
-    })["catch"](function (error) {
-      return console.log(error);
-    });
-  },
-  methods: {
-    uploadFile1: function uploadFile1() {
-      this.nid_img = this.$refs.nid_img.files[0];
-      this.cert_img = this.$refs.cert_img.files[0];
-      this.personal_img = this.$refs.personal_img.files[0];
-    },
-    register: function register() {
-      var _this2 = this;
-      this.emailVal = false;
-      this.passwordVa = false;
-      this.password_confirmationVal = false;
-      this.nid_imgVal = false;
-      this.cert_imgVal = false;
-      this.cert_imgVal = false;
-      this.personal_imgVal = false;
-
-      // const  file = this.files[0];
-      // const  fileType = file['type'];
-      // const  validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-
-      var mailformatemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      var mailformatpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
-      if (this.name == "") {
-        this.nameVal = true;
-      } else if (!this.email.match(mailformatemail) || this.email == "") {
-        this.emailVal = true;
-      } else if (!this.password.match(mailformatpassword) || this.password == "") {
-        this.passwordVal = true;
-      } else if (this.password_confirmation !== this.password || this.password_confirmation == '') {
-        this.password_confirmationVal = true;
-      }
-
-      //             else if (!this.items.id.includes(this.city_id)  || this.city_id == ''  ) {
-      //                 this.city_idVal = true;
-      //             }
-      // //////////////////
-
-      //             else if (this.nid_img == ''  ) {
-      //                 this.nid_imgVal = true;
-
-      //             }
-
-      //             else if (this.cert_img == ''   ) {
-      //                 this.cert_imgVal = true;
-
-      // }
-      ///////////////////////////
-      else {
-        var formData = new FormData();
-        formData.append("name", this.name);
-        formData.append("email", this.email);
-        formData.append("password", this.password);
-        formData.append("password_confirmation", this.password_confirmation);
-        formData.append("nid_img", this.nid_img);
-        formData.append("cert_img", this.cert_img);
-        formData.append("personal_img", this.personal_img);
-        formData.append("city_id", this.select);
-        console.log(formData);
-        axios.post("http://127.0.0.1:8000/api/registerMicanic", formData).then(function (res) {
-          console.log(res);
-          if (res.status == 200) {
-            res.data.files;
-            res.status; // HTTP status
-            console.log(res.data.data);
-            Notification.success();
-            _this2.$router.replace("/VerifyPass");
-          }
-        });
-        this.email = '';
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterUsersComponent.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterUsersComponent.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
+/* harmony import */ var _BaseSpinner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BaseSpinner.vue */ "./resources/js/components/BaseSpinner.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -6238,69 +5997,558 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    BaseSpinner: _BaseSpinner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+      nid_img: "",
+      cert_img: "",
+      personal_img: "",
+      city_id: "",
+      select: "",
+      items: [],
+      nameVal: false,
+      emailVal: false,
+      passwordVal: false,
+      password_confirmationVal: false,
+      nid_imgVal: false,
+      cert_imgVal: false,
+      personal_imgVal: false,
+      city_idVal: false,
+      isLoading: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    axios.get("http://127.0.0.1:8000/api/allCities").then(function (response) {
+      _this.items = response.data.data.results;
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  },
+  methods: {
+    uploadFile1: function uploadFile1() {
+      this.nid_img = this.$refs.nid_img.files[0];
+      this.cert_img = this.$refs.cert_img.files[0];
+      this.personal_img = this.$refs.personal_img.files[0];
+    },
+    register: function register() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var inputElement, files, inputElementPersonal_img, filesPersonal_img, mailformatemail, mailformatpassword, i, filename, extension, allowedExtensionsRegx, isAllowed, formData;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _this2.isLoading = true;
+              _this2.emailVal = false;
+              _this2.passwordVa = false;
+              _this2.password_confirmationVal = false;
+              _this2.nid_imgVal = false;
+              _this2.cert_imgVal = false;
+              _this2.cert_imgVal = false;
+              _this2.personal_imgVal = false;
+              inputElement = document.getElementById('nid_img');
+              files = inputElement.files; // const  file = this.files[0];
+              inputElementPersonal_img = document.getElementById('personal_img');
+              filesPersonal_img = inputElementPersonal_img.files; // const  file = this.files[0];
+              // const  fileType = file['type'];
+              // const  validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+              mailformatemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+              mailformatpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+              if (!(_this2.name == "")) {
+                _context.next = 18;
+                break;
+              }
+              _this2.nameVal = true;
+              _context.next = 62;
+              break;
+            case 18:
+              if (!(!_this2.email.match(mailformatemail) || _this2.email == "")) {
+                _context.next = 22;
+                break;
+              }
+              _this2.emailVal = true;
+              _context.next = 62;
+              break;
+            case 22:
+              if (!(!_this2.password.match(mailformatpassword) || _this2.password == "")) {
+                _context.next = 26;
+                break;
+              }
+              _this2.passwordVal = true;
+              _context.next = 62;
+              break;
+            case 26:
+              if (!(_this2.password_confirmation !== _this2.password || _this2.password_confirmation == '')) {
+                _context.next = 30;
+                break;
+              }
+              _this2.password_confirmationVal = true;
+              _context.next = 62;
+              break;
+            case 30:
+              if (!(files.length == 0)) {
+                _context.next = 39;
+                break;
+              }
+              if (!(files.length == 0)) {
+                _context.next = 36;
+                break;
+              }
+              _this2.nid_imgVal = true;
+              return _context.abrupt("return", false);
+            case 36:
+              /* iterating over the files array */
+              for (i = 0; i < files.length; i++) {
+                filename = files[i].name;
+                /* getting file extenstion eg- .jpg,.png, etc */
+                extension = filename.substr(filename.lastIndexOf("."));
+                /* define allowed file types */
+                allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                /* testing extension with regular expression */
+                isAllowed = allowedExtensionsRegx.test(extension);
+                if (isAllowed) {
+                  alert("File type is valid for the upload");
+                  /* file upload logic goes here... */
+                } else {
+                  alert("Invalid File Type.");
+                }
+              }
+            case 37:
+              _context.next = 62;
+              break;
+            case 39:
+              if (!(filesPersonal_img.length == 0)) {
+                _context.next = 48;
+                break;
+              }
+              if (!(filesPersonal_img.length == 0)) {
+                _context.next = 45;
+                break;
+              }
+              _this2.personal_imgVal = true;
+              return _context.abrupt("return", false);
+            case 45:
+              /* iterating over the files array */
+              for (i = 0; i < filesPersonal_img.length; i++) {
+                filename = filesPersonal_img[i].name;
+                /* getting file extenstion eg- .jpg,.png, etc */
+                extension = filename.substr(filename.lastIndexOf("."));
+                /* define allowed file types */
+                allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                /* testing extension with regular expression */
+                isAllowed = allowedExtensionsRegx.test(extension);
+                if (isAllowed) {
+                  alert("File type is valid for the upload");
+                  /* file upload logic goes here... */
+                } else {
+                  alert("Invalid File Type.");
+                }
+              }
+            case 46:
+              _context.next = 62;
+              break;
+            case 48:
+              _this2.isLoading = true;
+              formData = new FormData();
+              formData.append("name", _this2.name);
+              formData.append("email", _this2.email);
+              formData.append("password", _this2.password);
+              formData.append("password_confirmation", _this2.password_confirmation);
+              formData.append("nid_img", _this2.nid_img);
+              formData.append("cert_img", _this2.cert_img);
+              formData.append("personal_img", _this2.personal_img);
+              formData.append("city_id", _this2.select);
+              console.log(formData);
+              _context.next = 61;
+              return axios.post("http://127.0.0.1:8000/api/registerMicanic", formData).then(function (res) {
+                console.log(res);
+                _this2.emailVal = false;
+                if (res.status == 200) {
+                  res.data.files;
+                  res.status; // HTTP status
+                  console.log(res.data.data);
+                  Notification.success();
+                  _this2.name = '';
+                  _this2.email = '';
+                  _this2.password = '';
+                  _this2.password_confirmation = '';
+                  _this2.nid_img = '';
+                  _this2.cert_img = '';
+                  _this2.personal_img = '';
+                  _this2.city_id = '';
+                  _this2.select = '';
+                  _this2.items = '';
+                  _this2.$router.replace("/VerifyPass");
+                }
+              })["catch"](function (error) {
+                console.log(error);
+                Notification.error(error.response.data.errors.email);
+              });
+            case 61:
+              _this2.isLoading = false;
+            case 62:
+              _this2.isLoading = false;
+            case 63:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterUsersComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/RegisterUsersComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BaseSpinner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BaseSpinner.vue */ "./resources/js/components/BaseSpinner.vue");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    BaseSpinner: _BaseSpinner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var _ref;
+    return _ref = {
       name: "islam",
       email: "user98798@gmail.com",
       password: "@User1995",
-      password_confirmation: "@User1995",
-      emailVal: false,
-      passwordVal: false,
-      nameVal: false,
-      password_confirmationVal: false
-    };
+      password_confirmation: "@User1995"
+    }, _defineProperty(_ref, "password_confirmation", "@User1995"), _defineProperty(_ref, "isLoading", false), _defineProperty(_ref, "emailVal", false), _defineProperty(_ref, "passwordVal", false), _defineProperty(_ref, "nameVal", false), _defineProperty(_ref, "password_confirmationVal", false), _ref;
   },
   mounted: function mounted() {},
   methods: {
     register: function register() {
       var _this = this;
-      this.emailVal = false;
-      this.passwordVa = false;
-      this.nameVal = false;
-      var mailformatemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      var mailformatpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
-      if (!this.email.match(mailformatemail) || this.email == "") {
-        this.emailVal = true;
-      } else if (!this.password.match(mailformatpassword) || this.password == "") {
-        this.passwordVal = true;
-      } else if (this.password_confirmation == "" || this.password_confirmation !== this.password) {
-        this.password_confirmationVal = true;
-      } else if (this.name == "" || typeof this.name != 'string') {
-        this.nameVal = true;
-      } else {
-        axios.post("http://127.0.0.1:8000/api/register", {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation
-        }).then( /*#__PURE__*/function () {
-          var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(res) {
-            return _regeneratorRuntime().wrap(function _callee$(_context) {
-              while (1) switch (_context.prev = _context.next) {
-                case 0:
-                  console.log(res);
-                  if (res.status == 200) {
-                    res.data.files;
-                    res.status; // HTTP status
-                    console.log(res.data.data);
-                    Notification.success();
-                    _this.$router.replace("/VerifyPass");
-                  }
-                case 2:
-                case "end":
-                  return _context.stop();
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var mailformatemail, mailformatpassword;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _this.isLoading = true;
+              _this.emailVal = false;
+              _this.passwordVa = false;
+              _this.nameVal = false;
+              mailformatemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+              mailformatpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
+              if (!(!_this.email.match(mailformatemail) || _this.email == "")) {
+                _context2.next = 10;
+                break;
               }
-            }, _callee);
-          }));
-          return function (_x) {
-            return _ref.apply(this, arguments);
-          };
-        }())["catch"](function (error) {
-          return console.log(error);
-        });
-      }
+              _this.emailVal = true;
+              _context2.next = 26;
+              break;
+            case 10:
+              if (!(!_this.password.match(mailformatpassword) || _this.password == "")) {
+                _context2.next = 14;
+                break;
+              }
+              _this.passwordVal = true;
+              _context2.next = 26;
+              break;
+            case 14:
+              if (!(_this.password_confirmation == "" || _this.password_confirmation !== _this.password)) {
+                _context2.next = 18;
+                break;
+              }
+              _this.password_confirmationVal = true;
+              _context2.next = 26;
+              break;
+            case 18:
+              if (!(_this.name == "" || typeof _this.name != 'string')) {
+                _context2.next = 22;
+                break;
+              }
+              _this.nameVal = true;
+              _context2.next = 26;
+              break;
+            case 22:
+              _this.isLoading = true;
+              _context2.next = 25;
+              return axios.post("http://127.0.0.1:8000/api/register", {
+                name: _this.name,
+                email: _this.email,
+                password: _this.password,
+                password_confirmation: _this.password_confirmation
+              }).then( /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(res) {
+                  return _regeneratorRuntime().wrap(function _callee$(_context) {
+                    while (1) switch (_context.prev = _context.next) {
+                      case 0:
+                        console.log(res);
+                        if (res.status == 200) {
+                          res.data.files;
+                          res.status; // HTTP status
+                          console.log(res.data.data);
+                          Notification.success();
+                          _this.name = "";
+                          _this.email = "";
+                          _this.password = "";
+                          _this.password_confirmation = "";
+                          _this.$router.replace("/VerifyPass");
+                        }
+                      case 2:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }, _callee);
+                }));
+                return function (_x) {
+                  return _ref2.apply(this, arguments);
+                };
+              }())["catch"](function (error) {
+                console.log(error);
+                if (error.response.data.errors.email) {
+                  Notification.error(error.response.data.errors.email);
+                }
+              });
+            case 25:
+              _this.isLoading = false;
+            case 26:
+              _this.isLoading = false;
+            case 27:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -6408,9 +6656,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return _ref.apply(this, arguments);
           };
         }())["catch"](function (error) {
-          return console.log(error);
+          console.log(error);
+          Notification.error(error.response.data.message);
         });
       }
+      this.email = "";
     }
   }
 });
@@ -6542,9 +6792,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return _ref.apply(this, arguments);
           };
         }())["catch"](function (error) {
-          return console.log(error);
+          console.log(error);
+          Notification.error(error.response.data.message);
         });
       }
+      this.code = "";
+      this.password = "";
     }
   }
 });
@@ -6671,9 +6924,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return _ref.apply(this, arguments);
           };
         }())["catch"](function (error) {
-          return console.log(error);
+          console.log(error);
+          Notification.error(error.response.data.message);
         });
       }
+      this.code = "";
     }
   }
 });
@@ -6839,6 +7094,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     contact: function contact() {
+      var _this = this;
       this.Valname = false;
       this.Valmobile = false;
       this.Valmessage = false;
@@ -6860,6 +7116,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 case 0:
                   console.log(response);
                   if (response.status == 200) {
+                    _this.name = '';
+                    _this.mobile = '';
+                    _this.message = '';
                     Notification.success("yor answer send success");
                   }
                 case 2:
@@ -6872,11 +7131,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return _ref.apply(this, arguments);
           };
         }())["catch"](function (error) {
-          return console.log(error);
+          console.log(error);
+          Notification.error(error.response.data.errors.mobile);
         });
-        this.name = '';
-        this.mobile = '';
-        this.message = '';
         this.Valname = false;
         this.Valmobile = false;
         this.Valmessage = false;
@@ -7323,6 +7580,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7453,7 +7724,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Banner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Banner.vue */ "./resources/js/components/website/Banner.vue");
 /* harmony import */ var _Footer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer.vue */ "./resources/js/components/website/Footer.vue");
-//
 //
 //
 //
@@ -15342,7 +15612,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\na[data-v-152c8205]{\n    color: aliceblue;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\na[data-v-152c8205]{\r\n    color: aliceblue;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63896,7 +64166,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: { to: "/UserDashboard" },
                       },
-                      [_vm._v("\n            UserDashboard\n          ")]
+                      [_vm._v("\r\n            UserDashboard\r\n          ")]
                     ),
                   ],
                   1
@@ -63914,7 +64184,7 @@ var render = function () {
                         staticClass: "nav-link",
                         attrs: { to: "/MicanicDashboard" },
                       },
-                      [_vm._v("\n            MicanicDashboard\n          ")]
+                      [_vm._v("\r\n            MicanicDashboard\r\n          ")]
                     ),
                   ],
                   1
@@ -63934,7 +64204,7 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\n            AdminstrationDashboard\n          "
+                          "\r\n            AdminstrationDashboard\r\n          "
                         ),
                       ]
                     ),
@@ -63950,7 +64220,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/Home" } },
-                  [_vm._v("\n            Home\n          ")]
+                  [_vm._v("\r\n            Home\r\n          ")]
                 ),
               ],
               1
@@ -63963,7 +64233,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/services" } },
-                  [_vm._v("\n            Services\n          ")]
+                  [_vm._v("\r\n            Services\r\n          ")]
                 ),
               ],
               1
@@ -63976,7 +64246,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/micanics" } },
-                  [_vm._v("\n            Mecanics\n          ")]
+                  [_vm._v("\r\n            Mecanics\r\n          ")]
                 ),
               ],
               1
@@ -63989,7 +64259,7 @@ var render = function () {
                 _c(
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/Contact" } },
-                  [_vm._v("\n            Contact Us\n          ")]
+                  [_vm._v("\r\n            Contact Us\r\n          ")]
                 ),
               ],
               1
@@ -64044,7 +64314,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "There is stack order you dont pay for it,you have to pay before create new order or cancel\n                "
+                                    "There is stack order you dont pay for it,you have to pay before create new order or cancel\r\n                "
                                   ),
                                 ]
                               ),
@@ -64168,9 +64438,9 @@ var render = function () {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                  " +
+                                          "\r\n                  " +
                                             _vm._s(result.created_at) +
-                                            "\n                "
+                                            "\r\n                "
                                         ),
                                       ]
                                     ),
@@ -64227,7 +64497,7 @@ var render = function () {
                           staticClass: "dropdown-item",
                           attrs: { to: "/LoginComponent" },
                         },
-                        [_vm._v("\n                Login\n              ")]
+                        [_vm._v("\r\n                Login\r\n              ")]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -64240,7 +64510,7 @@ var render = function () {
                         },
                         [
                           _vm._v(
-                            "\n                Register Users\n              "
+                            "\r\n                Register Users\r\n              "
                           ),
                         ]
                       )
@@ -64255,7 +64525,7 @@ var render = function () {
                         },
                         [
                           _vm._v(
-                            "\n                Register Micancs\n              "
+                            "\r\n                Register Micancs\r\n              "
                           ),
                         ]
                       )
@@ -65345,8 +65615,18 @@ var render = function () {
                             },
                           },
                         }),
+                        _vm._v(" "),
+                        _vm.vaLnumber
+                          ? _c("div", { staticClass: "alert alert-danger" }, [
+                              _vm._v(
+                                "\n                          number is required\n                          "
+                              ),
+                            ])
+                          : _vm._e(),
                       ]
                     ),
+                    _vm._v(" "),
+                    _c("div"),
                     _vm._v(" "),
                     _c("div", { staticClass: "date" }, [
                       _c(
@@ -65395,6 +65675,14 @@ var render = function () {
                               },
                             },
                           }),
+                          _vm._v(" "),
+                          _vm.vaLexp_month
+                            ? _c("div", { staticClass: "alert alert-danger" }, [
+                                _vm._v(
+                                  "\n                            exp_month is required\n                            "
+                                ),
+                              ])
+                            : _vm._e(),
                         ]
                       ),
                       _vm._v(" "),
@@ -65444,6 +65732,14 @@ var render = function () {
                               },
                             },
                           }),
+                          _vm._v(" "),
+                          _vm.vaLexp_year
+                            ? _c("div", { staticClass: "alert alert-danger" }, [
+                                _vm._v(
+                                  "\n                            exp_year is required\n                            "
+                                ),
+                              ])
+                            : _vm._e(),
                         ]
                       ),
                     ]),
@@ -65487,6 +65783,14 @@ var render = function () {
                             },
                           },
                         }),
+                        _vm._v(" "),
+                        _vm.vaLcvc
+                          ? _c("div", { staticClass: "alert alert-danger" }, [
+                              _vm._v(
+                                "\n                          cvc is required\n                          "
+                              ),
+                            ])
+                          : _vm._e(),
                       ]
                     ),
                     _vm._v(" "),
@@ -65764,6 +66068,8 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "col-8" }, [
+          _vm.isLoading ? _c("div", [_c("BaseSpinner")], 1) : _vm._e(),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -65776,6 +66082,7 @@ var render = function () {
                   "form",
                   {
                     staticClass: "forms-sample",
+                    attrs: { multiple: "true" },
                     on: {
                       submit: function ($event) {
                         $event.preventDefault()
@@ -65825,7 +66132,7 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                      _c("label", { attrs: { for: "exampleInputEmail" } }, [
                         _vm._v("Email address"),
                       ]),
                       _vm._v(" "),
@@ -65840,7 +66147,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "email", id: "exampleInputEmail1" },
+                        attrs: { type: "email", id: "exampleInputEmail" },
                         domProps: { value: _vm.email },
                         on: {
                           input: function ($event) {
@@ -66129,6 +66436,8 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "col-8" }, [
+          _vm.isLoading ? _c("div", [_c("BaseSpinner")], 1) : _vm._e(),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -67741,6 +68050,26 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
+      _c("div", { staticStyle: { display: "flex" } }, [
+        _vm.isAdmin == "admin"
+          ? _c("div", [
+              _c("img", {
+                staticStyle: { width: "319px" },
+                attrs: { src: _vm.results.cert_img, alt: "Image" },
+              }),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isAdmin == "admin"
+          ? _c("div", [
+              _c("img", {
+                staticStyle: { width: "319px" },
+                attrs: { src: _vm.results.nid_img, alt: "Image" },
+              }),
+            ])
+          : _vm._e(),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "row px-xl-5" }, [
         _c("div", { staticClass: "col" }, [
           _vm._m(2),
@@ -68005,12 +68334,6 @@ var render = function () {
                     _c("h3", [_vm._v(_vm._s(service.name))]),
                     _vm._v(" "),
                     _c("h4", [_vm._v("Price: " + _vm._s(service.price))]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor"
-                      ),
-                    ]),
                   ]),
                 ]
               )

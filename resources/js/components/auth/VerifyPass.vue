@@ -99,8 +99,11 @@ export default {
                         }
 
                     })
-                    .catch((error) => console.log(error));
-            }
+                    .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });            }
+                    this.code=""
         },
     },
 };

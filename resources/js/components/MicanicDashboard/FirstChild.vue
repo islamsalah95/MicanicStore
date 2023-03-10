@@ -85,9 +85,10 @@ data() {
         console.log(response.data.data.results);
         this.items=response.data.data.results;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
 },
 methods: {
   link(){
@@ -111,9 +112,10 @@ methods: {
 axios.request(options).then(
   (response)=>{this.src=`${response.data.results[2].address} ,street ${response.data.results[2].street}`;}
   )
-.catch(function (error) {
-	console.error(error);
-});
+  .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
 
 
   },async close() {
@@ -128,9 +130,10 @@ axios.request(options).then(
           Notification.success("close order success");
           this.items=null
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
 
         this.isLoading=false;
 

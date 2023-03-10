@@ -14,7 +14,6 @@
                         <div class="service-item">
                             <h3>{{service.name}}</h3>
                             <h4>Price: {{service.price}}</h4>
-                            <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
                         </div>
                     </div>
 
