@@ -123,14 +123,19 @@ export default {
                     .then(async (response) => {
                       console.log(response);
                         if(response.status==200){
-                          Notification.success("yor answer send success");
-                        }
-                    })
-                    .catch((error) => console.log(error));
                     this.name=''
                      this.mobile=''
                       this.message=''
-                      this.Valname= false;
+                          Notification.success("yor answer send success");
+                        }
+                    })
+                    .catch(function(error){
+                        console.log(error)
+                        
+                        Notification.error(error.response.data.errors.mobile)
+                       
+
+                    });                      this.Valname= false;
                       this.Valmobile= false;
                       this.Valmessage= false;
             }

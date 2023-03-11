@@ -8,9 +8,13 @@ margin-left: -15px;
 align-items: center;
 justify-content: center;">
     <div class="col-8">
+        <div v-if="isLoading">
+            <BaseSpinner></BaseSpinner>
+        </div>
+      
         <div class="card" style="margin-top:170px; text-align: center;">
             <div class="card-body">
-                <form class="forms-sample" @submit.prevent="register">
+                <form class="forms-sample" @submit.prevent="register" multiple="true">
 
                             
                                 
@@ -35,13 +39,13 @@ justify-content: center;">
                     
                     
                     <div class="form-group">
-                        <label for="exampleInputEmail1"
+                        <label for="exampleInputEmail"
                             >Email address</label
                         >
                         <input
                             type="email"
                             class="form-control"
-                            id="exampleInputEmail1"
+                            id="exampleInputEmail"
                             v-model.trim="email"
                         />
                         <div
@@ -199,7 +203,12 @@ justify-content: center;">
 </template>
 
 <script>
+import BaseSpinner from '../BaseSpinner.vue'
+
 export default {
+    components:{
+    BaseSpinner
+  },
     data() {
         return {
             name:"",
@@ -220,6 +229,8 @@ export default {
             cert_imgVal: false,
             personal_imgVal: false,
             city_idVal: false,
+            isLoading:false,
+
         };
     },
     mounted() {
@@ -233,7 +244,9 @@ export default {
             this.cert_img = this.$refs.cert_img.files[0];
             this.personal_img = this.$refs.personal_img.files[0];
         },
-        register() {
+      async  register() {
+        this.isLoading=true
+
             this.emailVal = false;
             this.passwordVa = false;
             this.password_confirmationVal = false;
@@ -241,8 +254,13 @@ export default {
             this.cert_imgVal= false
             this.cert_imgVal= false
             this.personal_imgVal=false
+           
+    var inputElement = document.getElementById('nid_img');
+    var files = inputElement.files;// const  file = this.files[0];
 
-// const  file = this.files[0];
+
+    var inputElementPersonal_img = document.getElementById('personal_img');
+    var filesPersonal_img = inputElementPersonal_img.files;// const  file = this.files[0];
 // const  fileType = file['type'];
 // const  validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
@@ -266,23 +284,74 @@ export default {
                 this.password_confirmationVal = true;
             }
 
-//             else if (!this.items.id.includes(this.city_id)  || this.city_id == ''  ) {
-//                 this.city_idVal = true;
-//             }
+
 // //////////////////
+else if (files.length==0) {
+    if(files.length==0){
+       this.nid_imgVal = true;
 
-//             else if (this.nid_img == ''  ) {
-//                 this.nid_imgVal = true;
+        return false;
+    }else{
+ 
+        /* iterating over the files array */
+        for(var i=0;i<files.length;i++){
+            var filename = files[i].name;
+ 
+            /* getting file extenstion eg- .jpg,.png, etc */
+            var extension = filename.substr(filename.lastIndexOf("."));
+ 
+            /* define allowed file types */
+            var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+ 
+            /* testing extension with regular expression */
+            var isAllowed = allowedExtensionsRegx.test(extension);
+ 
+            if(isAllowed){
+                alert("File type is valid for the upload");
+                /* file upload logic goes here... */
+            }else{
+                alert("Invalid File Type.");
+            }
+        }       
+    }
+            }
 
-//             }
 
 
-//             else if (this.cert_img == ''   ) {
-//                 this.cert_imgVal = true;
+    else if (filesPersonal_img.length==0) {
+    if(filesPersonal_img.length==0){
+       this.personal_imgVal = true;
 
-            // }
+        return false;
+    }else{
+ 
+        /* iterating over the files array */
+        for(var i=0;i<filesPersonal_img.length;i++){
+            var filename = filesPersonal_img[i].name;
+ 
+            /* getting file extenstion eg- .jpg,.png, etc */
+            var extension = filename.substr(filename.lastIndexOf("."));
+ 
+            /* define allowed file types */
+            var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+ 
+            /* testing extension with regular expression */
+            var isAllowed = allowedExtensionsRegx.test(extension);
+ 
+            if(isAllowed){
+                alert("File type is valid for the upload");
+                /* file upload logic goes here... */
+            }else{
+                alert("Invalid File Type.");
+            }
+        }       
+    }
+            }
+
 ///////////////////////////
- else {
+ else {                  this.isLoading=true
+
+
                  const formData = new FormData();
                 formData.append("name", this.name);
                 formData.append("email", this.email);
@@ -295,24 +364,43 @@ export default {
                 console.log(formData);
 
 
-                axios.post(
+                await  axios.post(
                         "http://127.0.0.1:8000/api/registerMicanic",
                         formData
                     )
                     .then((res) => {
                         console.log(res);
+                        this.emailVal = false;
+
                  if(res.status==200){
                        res.data.files;
                         res.status; // HTTP status
                         console.log(res.data.data);
                         Notification.success();
+                        this.name='';
+                        this.email='';
+                        this.password='';
+                        this.password_confirmation='';
+                        this.nid_img='';
+                        this.cert_img='';
+                        this.personal_img='';
+                        this.city_id='';
+                        this.select='';
+                        this.items='';
                         this.$router.replace("/VerifyPass")
                         }
 
+                    }).catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.errors.email)
                     });
 
-                    this.email='';
+                    this.isLoading=false
+
             }
+
+            this.isLoading=false
+
         },
 
 

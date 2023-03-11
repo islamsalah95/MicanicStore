@@ -67,9 +67,10 @@ data() {
         console.log(response.data.data.results);
         this.results=response.data.data.results;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });
 },
 methods: {
 

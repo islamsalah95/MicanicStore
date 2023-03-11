@@ -48,6 +48,20 @@
                 </div>
             </div>
 
+
+<div style="display: flex;">
+                              <!-- cert_img -->
+                              <div v-if="isAdmin=='admin'" >
+                                <img style="width: 319px;" :src="results.cert_img" alt="Image">
+                            </div>
+                            <!-- nid_img -->
+                            <div v-if="isAdmin=='admin'">
+                                <img style="width: 319px;" :src="results.nid_img" alt="Image">
+                            </div>
+</div>
+
+
+
             <div class="row px-xl-5">
                 <div class="col">
                     <div class="nav nav-tabs justify-content-center border-secondary mb-4">

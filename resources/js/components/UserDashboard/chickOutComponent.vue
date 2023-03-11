@@ -20,7 +20,15 @@
                                     id="number"
                                     name="number"
                                   />
+                                  <div
+                                  v-if="vaLnumber"
+                                  class="alert alert-danger"
+                              >
+                              number is required
+                              </div>
                                 </div>
+                               
+                                <div></div>
               
                                 <div class="date">
                                   <div id="date" style="text-align: center" class="mb-3">
@@ -34,6 +42,13 @@
                                       id="exp_month"
                                       name="exp_month"
                                     />
+
+                                    <div
+                                    v-if="vaLexp_month"
+                                    class="alert alert-danger"
+                                >
+                                exp_month is required
+                                </div>
                                   </div>
               
                                   <div id="date" style="text-align: center" class="mb-3">
@@ -45,6 +60,13 @@
                                       id="exp_year"
                                       name="exp_year"
                                     />
+
+                                    <div
+                                    v-if="vaLexp_year"
+                                    class="alert alert-danger"
+                                >
+                                exp_year is required
+                                </div>
                                   </div>
                                 </div>
               
@@ -57,6 +79,12 @@
                                     id="cvc"
                                     name="cvc"
                                   />
+                                  <div
+                                  v-if="vaLcvc"
+                                  class="alert alert-danger"
+                              >
+                              cvc is required
+                              </div>
                                 </div>
               
                                 <div style="text-align: center" class="mb-3">
@@ -92,15 +120,25 @@ export default {
       exp_month: 10,
       exp_year: 2024,
       cvc: 123,
-      isLoading:false
+      isLoading:false,
+
+      vaLnumber: false,
+      vaLexp_month: false,
+      vaLexp_year:false,
+      vaLcvc: false,
     };
   },
   methods: {
     async pay() {
       this.isLoading=true
       const headers = { Authorization: localStorage.getItem("token") };
-
-     await axios.post(
+      
+      if (isNaN(this.number) || this.number =='' || this.number.toString().length !==16){ this.vaLnumber=true}
+      else if (isNaN(this.exp_month) || this.exp_month ==''|| this.exp_month.toString().length > 2){ this.vaLexp_month=true}
+      else if (isNaN(this.exp_year) || this.exp_year =='' || this.exp_year.toString().length !==4){ this.vaLexp_year=true}
+      else if (isNaN(this.cvc) || this.cvc =='' || this.cvc.toString().length !==3){ this.vaLcvc=true}
+      else{
+        await axios.post(
           `http://127.0.0.1:8000/api/paymentStore`,
           {
             number: this.number,
@@ -115,17 +153,23 @@ export default {
           console.log(response.data);
             Notification.success("payment success");
             this.isLoading=false
+            this.$router.replace("/OrderComponent");
         })
         .catch((error) => {
           if (error) {
             console.log(error.response.request.status) ;
             Notification.error(error.response.data.message)
             this.isLoading=false
-            this.$router.replace("/OrderComponent");
                       }
         });
 
         this.isLoading=false
+
+      }
+      this.isLoading=false
+
+
+
     },
   },
 };

@@ -100,8 +100,13 @@ export default {
                         Notification.success("update  passowrd success");
                         this.$router.replace("/UserDashboard");
                     })
-                    .catch((error) => console.log(error));
-            }
+                    .catch(function(error){
+                        console.log(error)
+                        Notification.error(error.response.data.message)
+                    });            }
+
+                   this.code=""
+                   this.password=""
         },
     },
 };
