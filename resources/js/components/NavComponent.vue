@@ -2,11 +2,9 @@
 <template>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background: #202C45 !important;">
-      <a class="navbar-brand brand-logo" href="index.html"><img src="http://127.0.0.1:8000/frontend/images/logo.svg" alt="logo"/></a>
-      <a class="navbar-brand brand-logo-mini" href="index.html"><img src="http://127.0.0.1:8000/frontend/images/logo-mini.svg" alt="logo"/></a>
-      <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-        <span class="typcn typcn-th-menu"></span>
-      </button>
+      <a class="navbar-brand brand-logo" href="index.html"><img width="50" height="50" 
+        src="http://127.0.0.1:8000/frontend/images/24220.svg" alt="logo"/></a>
+      <a style="color: aliceblue;" class="navbar-brand" href="#">Mechanic on Call</a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background: #202C45 !important;">
       <ul class="navbar-nav mr-lg-2">
